@@ -1,13 +1,49 @@
 # XPathy User Manual
+[![](https://jitpack.io/v/Volta-Jebaprashanth/xpathy.svg)](https://jitpack.io/#Volta-Jebaprashanth/xpathy)
 
 `XPathy` is a fluent API in Java for dynamically building XPath locators, primarily intended for use with Selenium WebDriver. It improves readability, reduces human error in string manipulation, and enables chaining of operations for complex XPath expressions.
 
 ---
+## 👨‍💻 Author
 
+Created by **Volta Jebaprashanth**  
+📧 [voltajeba@gmail.com](mailto:voltajeba@gmail.com)  
+📞 +94 77 463 7185
+
+---
 ## 📦 Package
 ```java
 package com.xpathy;
 ```
+---
+
+## 📦 Installation (via JitPack)
+
+To use this library in your **Maven** project:
+
+### Add the JitPack repository:
+
+```xml
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+```
+
+### Add the XPathy dependency:
+
+```xml
+<dependencies>
+  <dependency>
+    <groupId>com.github.Volta-Jebaprashanth</groupId>
+    <artifactId>xpathy</artifactId>
+    <version>1.0.3</version>
+  </dependency>
+</dependencies>
+```
+
 ---
 
 ## 🗂 Project Structure
