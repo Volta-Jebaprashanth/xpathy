@@ -56,7 +56,18 @@
 
   <build>
     <plugins>
-      <!-- Needed for deploy goal -->
+      <!-- Maven compiler plugin with proper Java version -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version> <!-- Modern version -->
+        <configuration>
+          <source>11</source>
+          <target>11</target>
+        </configuration>
+      </plugin>
+
+      <!-- Optional: still keep this for GitHub deploy if needed -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
@@ -64,5 +75,6 @@
       </plugin>
     </plugins>
   </build>
+
 
 </project>
