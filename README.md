@@ -4,13 +4,16 @@
 `XPathy` is a fluent API in Java for dynamically building XPath locators, primarily intended for use with Selenium WebDriver. It improves readability, reduces human error in string manipulation, and enables chaining of operations for complex XPath expressions.
 
 ---
+
 ## 👨‍💻 Author
 
 Created by **Volta Jebaprashanth**  
 📧 [voltajeba@gmail.com](mailto:voltajeba@gmail.com)  
-📞 +94 77 463 7185
+📞 +94 77 463 7185  
+🔗 [LinkedIn](https://www.linkedin.com/in/voltajeba)
 
 ---
+
 ## 📦 Package
 ```java
 package com.xpathy;
