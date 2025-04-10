@@ -23,6 +23,28 @@
 
   </dependencies>
 
+  <licenses>
+    <license>
+      <name>The MIT License</name>
+      <url>https://opensource.org/licenses/MIT</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>volta</id>
+      <name>Volta Jebaprashanth</name>
+      <url>https://github.com/Volta-Jebaprashanth</url>
+    </developer>
+  </developers>
+
+  <scm>
+    <url>https://github.com/Volta-Jebaprashanth/xpathy</url>
+    <connection>scm:git:git://github.com/Volta-Jebaprashanth/xpathy.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:Volta-Jebaprashanth/xpathy.git</developerConnection>
+  </scm>
+
+
   <!-- GitHub Packages Publishing Configuration -->
   <distributionManagement>
     <repository>
