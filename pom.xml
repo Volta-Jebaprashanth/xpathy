@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.xpathy</groupId>
+  <artifactId>xpathy</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>XPathy</name>
+  <description>A Java XPath expression builder for UI automation</description>
+  <url>https://github.com/Volta-Jebaprashanth/xpathy</url>
+
+  <dependencies>
+    <!-- Selenium Dependency -->
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>4.18.1</version>
+    </dependency>
+
+  </dependencies>
+
+  <!-- GitHub Packages Publishing Configuration -->
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/Volta-Jebaprashanth/xpathy</url>
+    </repository>
+  </distributionManagement>
+
+  <build>
+    <plugins>
+      <!-- Needed for deploy goal -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

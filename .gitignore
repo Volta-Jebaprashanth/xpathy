@@ -1,0 +1,56 @@
+# Maven build output
+/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# VS Code
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+
+# Package distribution
+*.jar
+*.war
+*.ear
+
+# Environment files
+.env
+*.env
+
+# Test output
+/test-output/
+
+# Coverage reports
+/coverage/
+*.exec
+jacoco.exec
+
+# Dependency cache
+/.mvn/
