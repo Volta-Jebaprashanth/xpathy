@@ -6,7 +6,7 @@
 
 ## 📦 Package
 ```java
-package VESTA.overrideClasses.XPathy;
+package com.xpathy;
 ```
 ---
 
