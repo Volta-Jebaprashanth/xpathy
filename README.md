@@ -22,7 +22,7 @@ package com.xpathy;
 
 ## 📦 Installation (via JitPack)
 
-To use this library in your **Maven** project:
+To use this library in your **Maven** project (pom.xml):
 
 ### Add the JitPack repository:
 
