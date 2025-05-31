@@ -2,17 +2,104 @@ package com.xpathy;
 
 import org.openqa.selenium.By;
 
-
 public class XPathy {
 
-    private String xpath;
-    private boolean isByCss = false;
-    private By cssBy = null;
+    protected String xpath;
+    protected boolean isByCss = false;
+    protected By cssBy = null;
 
-    //================== Constructors ========================
+    protected boolean is_and_or_condition_appendable;
 
+    protected Condition condition = Condition.NONE;
+
+    //-----------------------------
+    protected String removeChars = null;
+    protected String keepOnlyChars = null;
+    protected Case thisCase = null;
+    protected String translate_charactersToReplace = null;
+    protected String translate_replacementCharacters = null;
+
+    //-------------
+    protected boolean is_trim;
+    protected boolean is_normalize_space;
+
+    //-------------
+
+    protected String having_condition_prefix = null;
+
+    //--------------
+
+    protected void reset_values() {
+
+        this.is_trim = false;
+        this.is_normalize_space = false;
+        this.condition = Condition.NONE;
+
+        this.removeChars = null;
+        this.keepOnlyChars = null;
+        this.thisCase = null;
+        this.translate_charactersToReplace = null;
+        this.translate_replacementCharacters = null;
+
+        this.having_condition_prefix = null;
+
+    }
+
+    protected enum Condition {
+        AND,
+        OR,
+        NONE;
+    }
+
+    //===========================================================================================
+
+
+    public XPathy TAG(Tag tag) {
+        is_and_or_condition_appendable = false;
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "//" + tag;
+        copy.reset_values();
+        return copy;
+    }
+
+    public _Attribute_ ATTRIBUTE(Attribute attribute) {
+        return new _Attribute_(this, attribute);
+    }
+
+    public _Number_ NUMBER() {
+        return new _Number_(this);
+    }
+
+    public _Text_ TEXT() {
+        return new _Text_(this);
+    }
+
+    public _Style_ STYLE(Style style) {
+        return new _Style_(this, style);
+    }
+
+    public __Having_Init_ HAVING(){
+        return new __Having_Init_(this);
+    }
+
+    public XPathy AND() {
+        XPathy copy = this.copy();
+        copy.condition = Condition.AND;
+        return copy;
+    }
+
+    public XPathy OR() {
+        XPathy copy = this.copy();
+        copy.condition = Condition.OR;
+        return copy;
+    }
+
+    //======================================== CONSTRUCTORS ========================================
+
+    private static final String TAG_ANY = new XPathy(Tag.ANY).getXpath();
     public XPathy() {
-        this.xpath = "//*";
+        this.xpath = TAG_ANY;
     }
 
     public XPathy(String baseXPath) {
@@ -33,16 +120,24 @@ public class XPathy {
         this.xpath = xPathy.xpath;
         this.isByCss = xPathy.isByCss;
         this.cssBy = xPathy.cssBy;
+        this.is_and_or_condition_appendable = xPathy.is_and_or_condition_appendable;
+        this.condition = xPathy.condition;
+
+        this.is_trim = xPathy.is_trim;
+        this.is_normalize_space = xPathy.is_normalize_space;
+
+        this.removeChars = xPathy.removeChars;
+        this.keepOnlyChars = xPathy.keepOnlyChars;
+        this.thisCase = xPathy.thisCase;
+        this.translate_charactersToReplace = xPathy.translate_charactersToReplace;
+        this.translate_replacementCharacters = xPathy.translate_replacementCharacters;
+
+        this.having_condition_prefix = xPathy.having_condition_prefix;
+
     }
 
-    //===================================================================
 
-
-    private XPathy copy() {
-        return new XPathy(this);
-    }
-
-    //======================= Static creators ===================
+    //======================================== STATIC CREATOR ========================================
 
     public static XPathy from(By by) {
         String byString = by.toString();
@@ -79,188 +174,279 @@ public class XPathy {
         return new XPathy(xpath);
     }
 
-    public static XPathy from(Tag tag){
+    public static XPathy from(Tag tag) {
         return new XPathy("//" + tag);
     }
 
-    public static XPathy from(XPathy xPathy){
+    public static XPathy from(XPathy xPathy) {
         return new XPathy(xPathy);
     }
 
-    public static XPathy from(String baseXpath){
+    public static XPathy from(String baseXpath) {
         return new XPathy(baseXpath);
     }
-    public static XPathy of(Tag tag){
+
+    public static XPathy of(Tag tag) {
         return new XPathy("//" + tag);
     }
 
 
-    //======================================================================
-
+    // ======================================== PRIVATE METHODS ========================================
     private boolean checkXpathFormatToAppendAndOr() {
         String trimmedXpath = this.xpath.trim();
         return !trimmedXpath.matches(".*\\[\\d+\\]$") && !trimmedXpath.endsWith("[last()]");
     }
 
+    protected XPathy copy() {
+        return new XPathy(this);
+    }
+
+
+    //======================================== CONVERTERS ========================================
 
     public By toBy() {
         return isByCss ? cssBy : By.xpath(xpath);
     }
 
-    public By asLocator(){
+    public By asLocator() {
         return toBy();
     }
 
-    public By getLocator(){
+    public By getLocator() {
         return toBy();
     }
 
-    public String getXpath(){
+    public String getXpath() {
         return this.xpath;
     }
 
+    //======================================== ELEMENT INDEX ========================================
+
     public XPathy nth(int elementNumber) {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
         copy.xpath = "(" + this.xpath + ")[" + elementNumber + "]";
         return copy;
     }
 
+    public XPathy index(int index){
+        return nth(index);
+    }
+
     public XPathy last() {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
         copy.xpath = "(" + this.xpath + ")[last()]";
         return copy;
     }
 
+    //======================================== DOM NAVIGATION ========================================
+
     public XPathy tag(Tag tag) {
+
+        this.is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
+
+        if(copy.condition.equals(Condition.OR)){
+            copy.xpath = copy.xpath + " | " + TAG_ANY;
+        }
+
+        if (copy.xpath.endsWith(TAG_ANY)) {
+
+            copy.xpath = copy.xpath.substring(0, copy.xpath.lastIndexOf(TAG_ANY)) + new XPathy(tag).getXpath();
+            copy.reset_values();
+
+            return copy;
+        }
+
         copy.xpath = this.xpath + "//" + tag;
+        copy.reset_values();
+
         return copy;
     }
 
-    public XPathy equals(Attribute attribute, String value) {
+    public XPathy parent(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[@" + attribute + "='" + value + "']";
+        copy.xpath = this.xpath + "/parent::" + tag;
         return copy;
     }
 
-    public XPathy textEquals(String text) {
+    public XPathy parent() {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[text()='" + text + "']";
+        copy.xpath = this.xpath + "/..";
         return copy;
     }
 
-    public XPathy contains(Attribute attribute, String value) {
+    public XPathy up() {
+        return parent();
+    }
+
+    public XPathy up(int count) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[contains(@" + attribute + ", '" + value + "')]";
+        copy.xpath = this.xpath + "/..".repeat(count);
         return copy;
     }
 
-    public XPathy textContains(String value) {
+    public XPathy ancestors(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[contains(translate(text(), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '" + value + "')]";
+        copy.xpath = this.xpath + "/ancestor::" + tag;
         return copy;
     }
 
+    public XPathy ancestors() {
 
+        is_and_or_condition_appendable = false;
+        reset_values();
 
-    public XPathy startsWith(Attribute attribute, String value) {
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[starts-with(@" + attribute + ", '" + value + "')]" ;
+        copy.xpath = this.xpath + "/ancestor::*";
         return copy;
     }
 
-    public XPathy textStartsWith(String text) {
+    public XPathy children(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[starts-with(text(), '" + text + "')]";
+        copy.xpath = this.xpath + "/child::" + tag;
+        return copy;
+    }
+
+    public XPathy children() {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/child::*";
+        return copy;
+    }
+
+    public XPathy descendants(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/descendant::" + tag;
+        return copy;
+    }
+
+    public XPathy descendants() {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/descendant::*";
+        return copy;
+    }
+
+    public XPathy following_siblings(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/following-sibling::" + tag;
+        return copy;
+    }
+
+    public XPathy following_siblings() {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/following-sibling::*";
+        return copy;
+    }
+
+    public XPathy preceding_siblings(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/preceding-sibling::" + tag;
+        return copy;
+    }
+
+    public XPathy preceding_siblings() {
+
+        is_and_or_condition_appendable = false;
+        reset_values();
+
+        XPathy copy = this.copy();
+        copy.xpath = this.xpath + "/preceding-sibling::*";
         return copy;
     }
 
 
-    public XPathy andEquals(Attribute attribute, String value) {
-        String trimmed = this.xpath.trim();
-
-        if (checkXpathFormatToAppendAndOr() &&
-                        (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1) + " and @" + attribute + "='" + value + "']";
-            return copy;
-        }
-
-        return equals(attribute, value);
-
-    }
-
-    public XPathy andTextEquals(String value) {
-        String trimmed = this.xpath.trim();
-
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1) + " and text()='" + value + "']";
-            return copy;
-        }
-
-        return textEquals(value);
-
-    }
-
-    public XPathy andContains(Attribute attribute, String value) {
-        String trimmed = this.xpath.trim();
-
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1)
-                    + " and contains(@" + attribute + ", '" + value + "')]";
-            return copy;
-        }
-
-        return contains(attribute, value);
-    }
-
-    public XPathy andTextContains(String value) {
-        String trimmed = this.xpath.trim();
-
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1)
-                    + " and contains(text(), '" + value + "')]";
-            return copy;
-        }
-
-        return textContains(value);
-    }
+    //======================================== OR ========================================
 
     public XPathy or(Tag tag) {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
         copy.xpath = this.xpath + " | //" + tag;
         return copy;
     }
 
     public XPathy or(By by) {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
         copy.xpath = this.xpath + " | " + XPathy.from(by).xpath;
         return copy;
     }
 
     public XPathy or() {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
-        copy.xpath = this.xpath + " | //*" ;
+        copy.xpath = this.xpath + " | " + TAG_ANY;
         return copy;
     }
 
-    public XPathy or(XPathy xPathy){
+    public XPathy or(XPathy xPathy) {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
         copy.xpath = this.xpath + " | " + xPathy.xpath;
         return copy;
     }
 
     public XPathy or(XPathy... xPathies) {
+
+        is_and_or_condition_appendable = false;
+
         XPathy copy = this.copy();
         StringBuilder sb = new StringBuilder();
 
@@ -281,240 +467,35 @@ public class XPathy {
     }
 
 
+    //======================================== APPEND ========================================
 
-    public XPathy orEquals(Attribute attribute, String value) {
-        String trimmed = this.xpath.trim();
+    public XPathy append(By by) {
 
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1) + " or @" + attribute + "='" + value + "']";
-            return copy;
-        }
-
-        if(trimmed.replaceAll(" +", "").endsWith("|//*")){
-            XPathy copy = this.copy();
-            copy.xpath = new XPathy(this.xpath).equals(attribute, value).xpath ;
-            return copy;
-        }
+        is_and_or_condition_appendable = false;
 
         XPathy copy = this.copy();
-        copy.xpath = new XPathy(this.xpath + " | " + "//*").equals(attribute, value).xpath ;
+        copy.xpath = this.xpath + XPathy.from(by).xpath;
         return copy;
     }
 
-    public XPathy orTextEquals(String value) {
-        String trimmed = this.xpath.trim();
+    public XPathy append(XPathy xPathy) {
 
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1) + " or text()='" + value + "']";
-            return copy;
-        }
-
-        if(trimmed.replaceAll(" +", "").endsWith("|//*")){
-            XPathy copy = this.copy();
-            copy.xpath = new XPathy(this.xpath).textEquals(value).xpath ;
-            return copy;
-        }
+        is_and_or_condition_appendable = false;
 
         XPathy copy = this.copy();
-        copy.xpath = new XPathy(this.xpath + " | " + "//*").textEquals(value).xpath ;
+        copy.xpath = this.xpath + xPathy.xpath;
         return copy;
     }
 
-    public XPathy orContains(Attribute attribute, String value) {
-        String trimmed = this.xpath.trim();
+    public XPathy append(String xpath) {
 
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1)
-                    + " or contains(@" + attribute + ", '" + value + "')]";
-            return copy;
-        }
-
-        if(trimmed.replaceAll(" +", "").endsWith("|//*")){
-            XPathy copy = this.copy();
-            copy.xpath = new XPathy(this.xpath).contains(attribute, value).xpath ;
-            return copy;
-        }
+        is_and_or_condition_appendable = false;
 
         XPathy copy = this.copy();
-        copy.xpath = new XPathy(this.xpath + " | " + "//*").contains(attribute, value).xpath ;
+        copy.xpath = this.xpath + xpath;
         return copy;
     }
 
-    public XPathy orTextContains(String value) {
-        String trimmed = this.xpath.trim();
-
-        if (checkXpathFormatToAppendAndOr() &&
-                (trimmed.endsWith("']") || trimmed.endsWith(")]")))
-        {
-            XPathy copy = this.copy();
-            copy.xpath = this.xpath.substring(0, xpath.length() - 1)
-                    + " or contains(text(), '" + value + "')]";
-            return copy;
-        }
-
-        if(trimmed.replaceAll(" +", "").endsWith("|//*")){
-            XPathy copy = this.copy();
-            copy.xpath = new XPathy(this.xpath).textContains(value).xpath ;
-            return copy;
-        }
-
-        XPathy copy = this.copy();
-        copy.xpath = new XPathy(this.xpath + " | " + "//*").textContains(value).xpath ;
-        return copy;
-    }
-
-
-    public XPathy parent(Tag tag) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/parent::" + tag;
-        return copy;
-    }
-
-    public XPathy parent() {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/..";
-        return copy;
-    }
-
-    public XPathy up(int count) {
-        XPathy copy = this.copy();
-        StringBuilder upPath = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            upPath.append("/..");
-        }
-        copy.xpath = this.xpath + upPath.toString();
-        return copy;
-    }
-
-
-    public XPathy ancestors(Tag tag) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/ancestor::" + tag;
-        return copy;
-    }
-
-    public XPathy ancestors() {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/ancestor::*";
-        return copy;
-    }
-
-    public XPathy children(Tag tag) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/child::" + tag ;
-        return copy;
-    }
-
-    public XPathy children() {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/child::*";
-        return copy;
-    }
-
-    public XPathy descendants(Tag tag) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/descendant::" + tag;
-        return copy;
-    }
-
-    public XPathy descendants() {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/descendant::*";
-        return copy;
-    }
-
-    public XPathy following_siblings(Tag tag) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/following-sibling::" + tag;
-        return copy;
-    }
-
-    public XPathy following_siblings() {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/following-sibling::*";
-        return copy;
-    }
-
-    public XPathy preceding_siblings(Tag tag) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/preceding-sibling::" + tag;
-        return copy;
-    }
-
-    public XPathy preceding_siblings() {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "/preceding-sibling::*";
-        return copy;
-    }
-
-    public XPathy greaterThan(int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[. > " + number +  "]";
-        return copy;
-    }
-
-    public XPathy attributeGreaterThan(Attribute attribute, int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[@" + attribute + " > " + number + "]";
-        return copy;
-    }
-
-    public XPathy greaterOrEquals(int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[. >= " + number +  "]";
-        return copy;
-    }
-
-    public XPathy attributeGreaterOrEquals(Attribute attribute, int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[@" + attribute + " >= " + number + "]";
-        return copy;
-    }
-
-    public XPathy lessThan(int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[. < " + number +  "]";
-        return copy;
-    }
-
-    public XPathy attributeLessThan(Attribute attribute, int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[@" + attribute + " < " + number + "]";
-        return copy;
-    }
-
-    public XPathy lessOrEquals(int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[. <= " + number +  "]";
-        return copy;
-    }
-
-    public XPathy attributeLessOrEquals(Attribute attribute, int number) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[@" + attribute + " <= " + number + "]";
-        return copy;
-    }
-
-    public XPathy notEquals(Attribute attribute, String value) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[not(@" + attribute + "='" + value +  "')]";
-        return copy;
-    }
-
-    public XPathy textNotEquals(String value) {
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "[not(text() = '" + value + "')]";
-        return copy;
-    }
 
 
 }

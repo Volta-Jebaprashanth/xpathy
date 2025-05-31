@@ -162,33 +162,36 @@ public class Tag {
         return new Tag(tagName);
     }
 
-    public XPathy equals(Attribute attribute, String value){
-        return new XPathy("//" + this.tag_name).equals(attribute,value);
-    }
-
-    public XPathy textEquals(String value){
-        return new XPathy("//" + this.tag_name).textEquals(value);
-    }
-
-    public XPathy contains(Attribute attribute, String value){
-        return new XPathy("//" + this.tag_name).contains(attribute,value);
-    }
-
-    public XPathy textContains(String value){
-        return new XPathy("//" + this.tag_name).textContains(value);
-    }
-
-    public XPathy startsWith(Attribute attribute, String value){
-        return new XPathy("//" + this.tag_name).startsWith(attribute,value);
-    }
-
-    public XPathy textStartsWith(String value){
-        return new XPathy("//" + this.tag_name).textStartsWith(value);
-    }
-
     @Override
     public String toString() {
         return tag_name;
     }
+
+    //===================================================================================================================
+
+    public _Text_ TEXT(){
+        return new XPathy(this).TEXT();
+    }
+
+    public _Number_ NUMBER(){
+        return new XPathy(this).NUMBER();
+    }
+
+    public _Attribute_ ATTRIBUTE(Attribute attribute){
+        return new XPathy(this).ATTRIBUTE(attribute);
+    }
+
+    public _Style_ STYLE(Style style){
+        return new XPathy(this).STYLE(style);
+    }
+
+    public __Having_Init_ HAVING(){
+        return new XPathy(this).HAVING();
+    }
+
+    //================================================================================================================
+
+
+
 }
 
