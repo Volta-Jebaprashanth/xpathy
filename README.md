@@ -42,7 +42,7 @@ To use this library in your **Maven** project (pom.xml):
   <dependency>
     <groupId>com.github.Volta-Jebaprashanth</groupId>
     <artifactId>xpathy</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
   </dependency>
 </dependencies>
 ```
