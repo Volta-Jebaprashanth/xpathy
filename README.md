@@ -21,6 +21,8 @@ package com.xpathy;
 ---
 
 ## 📦 Installation (via JitPack)
+📎 [View on JitPack](https://jitpack.io/#Volta-Jebaprashanth/xpathy/2.0.1)
+for other installation modules.
 
 To use this library in your **Maven** project (pom.xml):
 
