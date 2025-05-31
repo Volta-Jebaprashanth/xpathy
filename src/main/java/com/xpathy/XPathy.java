@@ -497,5 +497,9 @@ public class XPathy {
     }
 
 
+    @Override
+    public String toString(){
+        return this.xpath;
+    }
 
 }
