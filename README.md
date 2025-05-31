@@ -42,307 +42,339 @@ To use this library in your **Maven** project (pom.xml):
   <dependency>
     <groupId>com.github.Volta-Jebaprashanth</groupId>
     <artifactId>xpathy</artifactId>
-    <version>1.0.3</version>
+    <version>2.0.0</version>
   </dependency>
 </dependencies>
 ```
 
 ---
 
-## 🗂 Project Structure
-The following are the core components of the `XPathy` utility:
+## ⚙️ Initialization
 
-### ✅ XPathy.java
-- The main class that provides a fluent API to build XPath expressions dynamically.
-- Converts various Selenium `By` locators to XPath.
-- Supports chaining filters, logic operators, traversals, and more.
-
-### 🏷 Attribute.java
-- class representing attribute names (e.g., `id`, `class`, `name`, `data-*` attributes).
-- Used for type-safe attribute access in methods like `.equals(Attribute.id, "product")`.
-- You can define custom attributes too using:
-  ```java
-  Attribute customAttr = Attribute.CUSTOM("data-custom");
-  ```
-
-### 🔖 Tag.java
-- class representing HTML tag names (e.g., `div`, `span`, `a`, `input`).
-- Also includes shortcut methods to start building XPathy expressions directly from a tag.
-  ```java
-  Tag.span.equals(Attribute.id, "value");
-  Tag.button.textContains("Click");
-  ```
-- You can define custom tags too using:
-  ```java
-  Tag customTag = Tag.CUSTOM("my-tag");
-  ```
-
----
-
-
-## 🏁 Initialization
-You can initialize `XPathy` in multiple ways:
+### 🔹 Using Constructor
 
 ```java
-new XPathy();                           // default: //* (matches any element)
-new XPathy("//div[@class='example']");  //from existing xpath String
-new XPathy(Tag.div);                    // if Tag is an enum with tag names
-new XPathy(By.id("username"));          // existing By object
-new XPathy(existingXPathyInstance);
+new XPathy();                            // Selects all elements (*).
+new XPathy("//div[@class='example']");   // Initialize from raw XPath string
+new XPathy(Tag.div);                      // From a predefined tag
+new XPathy(By.id("username"));           // From Selenium By object
+new XPathy(existingXPathyInstance);      // Clone existing XPathy
 ```
 
-Use static `from(...)` or `of(...)` methods for convenience:
+### 🔹 Using Static Factory Methods
+
 ```java
 XPathy.from(By.id("username"));
 XPathy.from("//div[@class='example']");
-XPathy.from(Tag.div);
-XPathy.from(existingXPathyInstance);
-XPathy.of(Tag.span);                   // alias for XPathy.from(Tag.span)
-```
-XPathy can also be initialized directly from a `Tag` using extended methods on the `Tag` enum:
-```java
-Tag.span.equals(Attribute.id, "value");
-Tag.button.textContains("Click me");
-Tag.input.startsWith(Attribute.name, "prefix");
-Tag.h2.textStartsWith("Title");
+XPathy.from(Tag.span);
+XPathy.of(Tag.div);                      // Alias for from(...)
 ```
 
 ---
 
-## 🔍 Locators
-The `.getLocator()` or `.toBy()` method returns a Selenium `By` object that can be used directly with WebDriver operations like `findElement()`.
+## 🏷 Starting from Tags, Attributes, Text, and Style
+
+### 🔸 From Tag
 
 ```java
-By by = xpathyInstance.toBy();
-By locator = xpathyInstance.getLocator();
+Tag.span.ATTRIBUTE(Attribute.id).equals("value");
+Tag.button.TEXT().contains("Click me");
+```
+
+### 🔸 From Attribute
+
+```java
+Attribute.id.contains("username");
+Attribute.class_.equals("form-control");
+```
+
+### 🔸 From Text
+
+```java
+Text.contains("welcome");
+Text.startsWith("Hello");
+```
+
+### 🔸 From Style
+
+```java
+Style.backgroundColor.equals("red");
 ```
 
 ---
 
-## 🧱 XPath Construction Methods
+## 🧱 Core XPathy Methods
 
-### 🔸 Basic Filters
+### 🔸 Attribute and Text Filters
+
 ```java
-xpathy.equals(Attribute.id, "value")
-XPathy.textEquals("Exact Text")
-xpathy.contains(Attribute.title, "partial")
-xpathy.textContains("partial")
-xpathy.startsWith(Attribute.name, "start")
-xpathy.textStartsWith("start")
+xpathy.ATTRIBUTE(Attribute.id).equals("value");
+xpathy.TEXT().contains("partial");
+xpathy.NUMBER().greaterThan(10);
 ```
 
-### 🔸 Logical AND
+### 🔸 Style Filters
+
 ```java
-xpathy.andEquals(Attribute.attr, "value")
-xpathy.andTextEquals("Exact Text")
-xpathy.andContains(Attribute.attr, "value")
-xpathy.andTextContains("value")
+xpathy.STYLE(Style.marginTop).equals("12px");
 ```
 
-### 🔸 Logical OR
+### 🔸 Indexing
+
 ```java
-xpathy.or(Tag.div)
-xpathy.or(By.id("other"))
-xpathy.or(XPathyInstance)
-xpathy.or(XPathyInstance1, XPathyInstance2, ...)
-xpathy.orEquals(Attribute.attr, "value")
-xpathy.orTextEquals("value")
-xpathy.orContains(Attribute.attr, "value")
-xpathy.orTextContains("value")
+xpathy.index(2);         // (xpath)[2]
+xpathy.last();         // (xpath)[last()]
+```
+
+---
+
+## 🔠 Value Transformation Flags
+
+XPathy supports a variety of transformation flags that modify the way attribute or text values are matched. These are extremely useful for sanitizing or normalizing the content before comparison. All of these methods can be chained with `.TEXT()` or `.ATTRIBUTE(...)` selectors.
+
+### 🔸 KEEP / REMOVE
+
+These are used to keep or remove specific character groups from the target string before applying the condition.
+
+```java
+.KEEP(Only.SPACES)
+```
+
+```java
+new XPathy(Tag.div)
+  .TEXT().KEEP(Only.ENGLISH_ALPHABETS).equals("hello world");
+```
+
+**What it does:** Keeps only spaces in the original text and removes all other characters before comparison. In this case, only spaces in the string "hello world" are preserved for the equality check.
+
+```java
+.REMOVE(Only.SPACES, Only.NUMBERS)
+```
+```java
+new XPathy(Tag.input)
+  .ATTRIBUTE(Attribute.name).REMOVE(Only.SPACES, Only.NUMBERS).equals("test-user");
+```
+
+**What it does:** Removes all spaces and digits from the "name" attribute's value before applying the equals("test-user") condition.
+
+### 🔸 TRANSLATE
+```java
+.TRANSLATE("éàè", "eae")
+```
+```java
+new XPathy(Tag.label)
+  .TEXT().TRANSLATE("éàè", "eae").equals("Cafe");
+```
+
+**What it does:** Translates all occurrences of 'é', 'à', and 'è' into 'e', 'a', and 'e' respectively before comparison. Useful for internationalized strings.
+
+### 🔸 CASE and Normalization
+```java
+.CASE(Case.LOWER)
+```
+```java
+new XPathy(Tag.div)
+  .TEXT().CASE(Case.LOWER).equals("status");
+```
+
+**What it does:** Converts the text to lowercase before checking if it equals "status".
+
+```java
+.TRIM()
+```
+```java
+new XPathy(Tag.span)
+  .TEXT().TRIM().equals("Submit");
+```
+
+**What it does:** Removes any leading/trailing whitespace from the text before checking if it equals "Submit".
+```java
+.NORMALIZE_SPACE()
+```
+```java
+new XPathy(Tag.span)
+  .TEXT().NORMALIZE_SPACE().contains("welcome back");
+```
+
+**What it does:** Normalizes spacing by replacing multiple spaces with a single space and trimming whitespace.
+
+These transformations help ensure that your XPath filters remain resilient across inconsistent formatting or user-entered text.
+
+XPathy supports a variety of transformation flags that modify the way attribute or text values are matched. These are extremely useful for sanitizing or normalizing the content before comparison. All of these methods can be chained with `.TEXT()` or `.ATTRIBUTE(...)` selectors.
+
+
+
+---
+
+## 🔗 Logical Combinations
+
+### 🔸 AND / OR / NOT
+
+```java
+.AND()
+.OR()
+.NOT()
+```
+
+Used between filters to logically combine multiple conditions:
+
+```java
+new XPathy(Tag.input)
+  .ATTRIBUTE(Attribute.name).equals("username")
+  .AND().ATTRIBUTE(Attribute.type).equals("text")
+  .AND().TEXT().NOT().equals("Guest");
 ```
 
 ---
 
 ## 🌲 DOM Navigation
 
-### 🔼 Upward Traversal
+XPathy provides convenient methods to traverse the DOM tree in any direction. These methods are written in **lowercase** and return a new XPathy object pointing to the selected parent, child, sibling, or relative position.
+
+### 🔼 Upward
+
 ```java
-xpathy.parent()                  // move to parent
-xpathy.parent(Tag.div)           // parent with specific tag
-xpathy.up(2)                     // move n levels up
-xpathy.ancestors()               // all ancestors
-xpathy.ancestors(Tag.span)       // specific ancestor
+.parent();              // Move one level up in the DOM
+.parent(Tag.div);       // Move to the parent if it's a <div>
+.up(2);                 // Move two levels up from the current element
 ```
 
-### 🔽 Downward Traversal
+**What it does:** Enables you to go from a deeply nested element to its parent(s), commonly used for relative matching.
+
+### 🔽 Downward
+
 ```java
-xpathy.children()                // all children
-xpathy.children(Tag.div)         // specific child tag
-xpathy.descendants()             // all descendants
-xpathy.descendants(Tag.a)        // specific descendant
+.children();            // Get all direct children
+.children(Tag.div);     // Get only direct children with a specific tag
+.descendants();         // Get all descendant nodes
+.descendants(Tag.span); // Get all descendants matching a specific tag
 ```
+
+**What it does:** Select elements nested within the current node, either directly or at any depth.
 
 ### 🔁 Siblings
+
 ```java
-xpathy.following_siblings()
-xpathy.following_siblings(Tag.div)
-xpathy.preceding_siblings()
-xpathy.preceding_siblings(Tag.div)  
+.following_siblings();             // All following siblings
+.following_siblings(Tag.div);     // Following siblings that are <div>
+.preceding_siblings();            // All preceding siblings
+.preceding_siblings(Tag.div);     // Preceding siblings that are <div>
 ```
 
----
+**What it does:** Navigates horizontally in the DOM, useful when elements are on the same level and have similar structure (like rows or columns).
 
-## 🔢 Indexing
-```java
-xpathy.nth(2)      // (xpath)[2]
-xpathy.last()      // (xpath)[last()]
-```
+###
 
 ---
 
 ## 📊 Comparisons
 
-### With Node Text
+### 🔸 With Text
+
 ```java
-xpathy.greaterThan(10)
-xpathy.greaterOrEquals(10)
-xpathy.lessThan(10)
-xpathy.lessOrEquals(10)
+.TEXT().greaterThan(10);
+.NUMBER().lessThanOrEquals(50);
 ```
 
-### With Attribute
+### 🔸 With Attributes
+
 ```java
-xpathy.attributeGreaterThan(Attribute.attr, 10)
-xpathy.attributeGreaterOrEquals(Attribute.attr, 10)
-xpathy.attributeLessThan(Attribute.attr, 10)
-xpathy.attributeLessOrEquals(Attribute.attr, 10)
+.ATTRIBUTE(Attribute.dataIndex).greaterOrEquals(5);
 ```
 
 ---
 
-## 🚫 Negation
+## 📌 HAVING Clause
+
+The `HAVING()` clause in XPathy is used to apply conditions on sub-elements or attributes that belong to the current node. After `.HAVING()`, you can specify the target using directional methods like `.ANY_CHILD()`, `.ANY_DESCENDANT()`, etc., followed by filters.
+
+### 🔸 Examples
+
 ```java
-XPathy.notEquals(Attribute.attr, "value")
-XPathy.textNotEquals("Text")
+new XPathy().HAVING().ANY_CHILD().TEXT().contains("value");
+```
+
+**What it does:** Selects the current element only if it has at least one child whose text contains "value".
+
+```java
+new XPathy(Tag.div)
+  .HAVING().ANY_DESCENDANT().ATTRIBUTE(Attribute.class_).equals("highlight");
+```
+
+**What it does:** Selects  elements that contain any descendant with a class attribute of "highlight".
+
+```java
+new XPathy(Tag.section)
+  .HAVING().ANY_CHILD(Tag.p).TEXT().startsWith("Note");
+```
+
+**What it does:** Selects  nodes that have a direct  child whose text starts with "Note".
+
+These methods enable complex filtering inside nested structures without manually building the full XPath hierarchy.
+
+Apply conditions to sub-elements or node content.
+
+
+---
+
+## 🔁 Utility Methods
+
+```java
+.getXpath();    // Returns String representation
+.getLocator();  // Returns By object
+.toBy();        // Same as getLocator()
 ```
 
 ---
 
-## 🔁 Utility
+## 🧪 Full Examples
+
+### 1. Attribute, Text, and AND Logic
+
 ```java
-XPathy.getXpath();   // returns the XPath string
-XPathy.copy();       // clones the instance
+new XPathy(Tag.div)
+  .ATTRIBUTE(Attribute.id).equals("container")
+  .AND().TEXT().contains("Welcome")
+  .getLocator();
 ```
+
+### 2. Parent and Sibling Traversal
+
+```java
+new XPathy(Tag.div).ATTRIBUTE(Attribute.class_).contains("products")
+  .PARENT(Tag.tr)
+  .FOLLOWING_SIBLING(Tag.tr)
+  .ATTRIBUTE(Attribute.dataIndex).greaterThan(5);
+```
+
+### 3. Transform, Normalize, Translate
+
+```java
+new XPathy(Tag.label)
+  .TEXT().TRIM().CASE(Case.UPPER).TRANSLATE("Ä", "A").startsWith("ABCD");
+```
+
+### 4. Using HAVING with Length Check
+
+```java
+new XPathy(Tag.button).TEXT().contains("Submit")
+  .AND()
+  .HAVING().ANY_CHILD().TEXT().LENGTH().greaterThan(6);
+```
+
+### 5. OR Condition
+
+```java
+new XPathy(Tag.a).TEXT().equals("Details")
+  .OR().TEXT().equals("Other Details");
+```
+
+
+
 
 ---
 
-## 🧪 Example
 
-### 🔹 Basic Example
-```java
-By locator = new XPathy(Tag.div)
-    .equals(Attribute.id, "container")
-    .getLocator();
-
-// output By XPath: //div[@id='container']
-```
-
-### 🔹 Adding Child and Text Condition
-```java
-By locator = new XPathy(Tag.div)
-    .equals(Attribute.id, "main")
-    .children(Tag.span)
-    .textEquals("Click Me")
-    .getLocator();
-
-// Output By XPath: //div[@id='main']/child::span[text()='Click Me']
-```
-
-### 🔹 Using Descendant and Class Contains
-```java
-By locator = new XPathy(Tag.section)
-    .contains(Attribute.class, "content")
-    .descendants(Tag.button)
-    .textContains("Submit")
-    .getLocator();
-
-// output By XPath: //section[contains(@class, 'content')]/descendant::button[contains(text(), 'Submit')]
-```
-
-### 🔹 Using AND for Multiple Conditions
-```java
-By locator = new XPathy(Tag.div)
-    .equals(Attribute.id, "form")
-    .andContains(Attribute.class, "validated")
-    .andTextContains("Register")
-    .getLocator();
-
-// output By XPath: //div[@id='form' and contains(@class, 'validated') and contains(text(), 'Register')]
-```
-
-### 🔹 Using OR to Match Multiple Tags
-```java
-By locator = new XPathy(Tag.button)
-    .textEquals("Save")
-    .or(new XPathy(Tag.a).textEquals("Save"))
-    .getLocator();
-
-// output By XPath: //button[text()='Save'] | //a[text()='Save']
-```
-
-### 🔹 Combining Advanced Conditions
-```java
-By locator = new XPathy(Tag.div)
-    .equals(Attribute.id, "profile")
-    .descendants(Tag.span)
-    .textEquals("Edit")
-    .orTextEquals("Update")
-    .andContains(Attribute.class, "btn")
-    .getLocator();
-
-// output By XPath: //div[@id='profile']/descendant::span[text()='Edit' or text()='Update' and contains(@class, 'btn')]
-```
-
-### 🔹 Complex Use Case: Ancestor Traversal with OR
-```java
-By locator = new XPathy(Tag.span)
-    .textContains("Price")
-    .ancestors(Tag.tr)
-    .or(new XPathy(Tag.span).textContains("Amount").ancestors(Tag.tr))
-    .getLocator();
-
-// output By XPath: //span[contains(text(), 'Price')]/ancestor::tr | //span[contains(text(), 'Amount')]/ancestor::tr
-```
-
-### 🔹 Full Chain: Up, Siblings, and Attribute Comparison
-```java
-By locator = new XPathy(Tag.div)
-    .equals(Attribute.class, "row")
-    .up(1)
-    .following_siblings(Tag.div)
-    .attributeGreaterOrEquals(Attribute.dataIndex, 5)
-    .getLocator();
-
-// output By XPath: //div[@class='row']/../following-sibling::div[@dataIndex >= 5]
-```
-
-### 🔹 Get Final XPath 
-```java
-String xpathString = locator.getXpath();
-```
-
-### 🔹 Get Final By  
-```java
-By locator = xpathy.getLocator();
-By locator = xpathy.getBy();
-```
-
-These examples cover a variety of realistic test automation needs using XPathy.
-```java
-XPathy locator = new XPathy(Tag.div)
-    .equals(Attribute.id, "container")
-    .andContains(Attribute.class, "section")
-    .descendants(Tag.button)
-    .textEquals("Submit");
-
-WebElement button = driver.findElement(locator.toBy());
-```
-This builds:
-```xpath
-//div[@id='container' and contains(@class, 'section')]/descendant::button[text()='Submit']
-```
-
----
 
 ## 📝 Notes
 - XPathy is immutable: each operation returns a new instance.
@@ -351,12 +383,23 @@ This builds:
 
 ---
 
-## 🎯 Tips
-- Avoid deeply chained logic unless necessary.
-- Use `.getXpath()` for debugging/logging actual XPath strings.
-- For fallback matching, use `or(...)` to combine multiple locators.
+## 💡 Tips
+
+* Use enums like `Tag`, `Attribute`, `Only`, `Style`, and `Case` for type-safety.
+* Avoid raw XPath strings.
+* Use `.getXpath()` for debug output.
 
 ---
 
-Happy Testing 🚀
+
+## 📬 Support & Contact
+
+Created by **Volta Jebaprashanth**
+📧 [voltajeba@gmail.com](mailto:voltajeba@gmail.com)
+🔗 [LinkedIn](https://www.linkedin.com/in/voltajeba)
+
+---
+
+Happy Testing with XPathy! 🚀
+
 
