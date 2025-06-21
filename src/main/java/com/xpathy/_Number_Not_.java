@@ -58,7 +58,7 @@ public class _Number_Not_ {
         String transformedText = transformer.buildFunctionExpression("text()");
         String function = "number(" + transformedText + ")";
 
-        copy.xpath = new _AppendAndOr_(copy).append(function + " <= " + min + " or " + function + " >= " + max);
+        copy.xpath = new _AppendAndOr_(copy).append(" not ( " + function + " >= " + min + " and " + function + " <= " + max + " ) ");
 
         copy.is_and_or_condition_appendable = true;
         copy.reset_values();

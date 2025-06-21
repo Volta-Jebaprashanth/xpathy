@@ -1,0 +1,16 @@
+package com.xpathy;
+
+enum Expressions {
+    EQUALS_TEXT_VALUE,
+    EQUALS_NUMBER_VALUE,
+    STARTS_WITH,
+    CONTAINS,
+    HAVE_IT,
+    IS_EMPTY,
+    IS_NUMERIC,
+    GREATER_THAN,
+    GREATER_THAN_OR_EQUALS,
+    LESS_THAN,
+    LESS_THAN_OR_EQUALS,
+    BETWEEN
+}

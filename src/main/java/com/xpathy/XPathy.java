@@ -54,14 +54,14 @@ public class XPathy {
     //===========================================================================================
 
 
-    public XPathy TAG(Tag tag) {
-        is_and_or_condition_appendable = false;
-
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + "//" + tag;
-        copy.reset_values();
-        return copy;
-    }
+//    public XPathy TAG(Tag tag) {
+//        is_and_or_condition_appendable = false;
+//
+//        XPathy copy = this.copy();
+//        copy.xpath = this.xpath + "//" + tag;
+//        copy.reset_values();
+//        return copy;
+//    }
 
     public _Attribute_ ATTRIBUTE(Attribute attribute) {
         return new _Attribute_(this, attribute);
@@ -83,16 +83,16 @@ public class XPathy {
         return new __Having_Init_(this);
     }
 
-    public XPathy AND() {
+    public _XPathy_And_ AND() {
         XPathy copy = this.copy();
         copy.condition = Condition.AND;
-        return copy;
+        return new _XPathy_And_(copy);
     }
 
-    public XPathy OR() {
+    public _XPathy_Or_ OR() {
         XPathy copy = this.copy();
         copy.condition = Condition.OR;
-        return copy;
+        return new _XPathy_Or_(copy);
     }
 
     //======================================== CONSTRUCTORS ========================================
@@ -407,16 +407,16 @@ public class XPathy {
 
     //======================================== OR ========================================
 
-    public XPathy or(Tag tag) {
+//    public XPathy or(Tag tag) {
+//
+//        is_and_or_condition_appendable = false;
+//
+//        XPathy copy = this.copy();
+//        copy.xpath = this.xpath + " | //" + tag;
+//        return copy;
+//    }
 
-        is_and_or_condition_appendable = false;
-
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + " | //" + tag;
-        return copy;
-    }
-
-    public XPathy or(By by) {
+    public XPathy OR(By by) {
 
         is_and_or_condition_appendable = false;
 
@@ -425,16 +425,16 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy or() {
+//    public XPathy or() {
+//
+//        is_and_or_condition_appendable = false;
+//
+//        XPathy copy = this.copy();
+//        copy.xpath = this.xpath + " | " + TAG_ANY;
+//        return copy;
+//    }
 
-        is_and_or_condition_appendable = false;
-
-        XPathy copy = this.copy();
-        copy.xpath = this.xpath + " | " + TAG_ANY;
-        return copy;
-    }
-
-    public XPathy or(XPathy xPathy) {
+    public XPathy OR(XPathy xPathy) {
 
         is_and_or_condition_appendable = false;
 
@@ -443,7 +443,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy or(XPathy... xPathies) {
+    public XPathy OR(XPathy... xPathies) {
 
         is_and_or_condition_appendable = false;
 
