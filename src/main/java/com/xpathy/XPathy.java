@@ -496,6 +496,18 @@ public class XPathy {
         return copy;
     }
 
+    //===========================================
+
+    public XPathy CONDITION(com.xpathy.Condition condition){
+        XPathy copy = this.copy();
+        copy.is_and_or_condition_appendable = false;
+        copy.reset_values();
+
+        copy.xpath = this.xpath + "[" + condition.getCondition() + "]";
+
+        return copy;
+    }
+
 
     @Override
     public String toString(){
