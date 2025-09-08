@@ -44,7 +44,7 @@ To use this library in your **Maven** project (pom.xml):
   <dependency>
     <groupId>com.github.Volta-Jebaprashanth</groupId>
     <artifactId>xpathy</artifactId>
-    <version>2.0.3</version>
+    <version>2.0.4/version>
   </dependency>
 </dependencies>
 ```
@@ -246,10 +246,10 @@ XPathy provides convenient methods to traverse the DOM tree in any direction. Th
 ### 🔽 Downward
 
 ```java
-.children();            // Get all direct children
-.children(Tag.div);     // Get only direct children with a specific tag
-.descendants();         // Get all descendant nodes
-.descendants(Tag.span); // Get all descendants matching a specific tag
+.child();            // Get all direct children
+.child(Tag.div);     // Get only direct children with a specific tag
+.descendant();         // Get all descendant nodes
+.descendant(Tag.span); // Get all descendants matching a specific tag
 ```
 
 **What it does:** Select elements nested within the current node, either directly or at any depth.
@@ -257,10 +257,10 @@ XPathy provides convenient methods to traverse the DOM tree in any direction. Th
 ### 🔁 Siblings
 
 ```java
-.following_siblings();             // All following siblings
-.following_siblings(Tag.div);     // Following siblings that are <div>
-.preceding_siblings();            // All preceding siblings
-.preceding_siblings(Tag.div);     // Preceding siblings that are <div>
+.following_sibling();             // All following siblings
+.following_sibling(Tag.div);     // Following siblings that are <div>
+.preceding_sibling();            // All preceding siblings
+.preceding_sibling(Tag.div);     // Preceding siblings that are <div>
 ```
 
 **What it does:** Navigates horizontally in the DOM, useful when elements are on the same level and have similar structure (like rows or columns).
@@ -344,8 +344,8 @@ new XPathy(Tag.div)
 
 ```java
 new XPathy(Tag.div).ATTRIBUTE(Attribute.class_).contains("products")
-  .PARENT(Tag.tr)
-  .FOLLOWING_SIBLING(Tag.tr)
+  .parent(Tag.tr)
+  .following_sibling(Tag.tr)
   .ATTRIBUTE(Attribute.dataIndex).greaterThan(5);
 ```
 

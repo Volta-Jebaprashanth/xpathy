@@ -304,7 +304,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy ancestors(Tag tag) {
+    public XPathy ancestor(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -314,7 +314,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy ancestors() {
+    public XPathy ancestor() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -324,7 +324,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy children(Tag tag) {
+    public XPathy child(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -334,7 +334,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy children() {
+    public XPathy child() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -344,7 +344,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy descendants(Tag tag) {
+    public XPathy descendant(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -354,7 +354,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy descendants() {
+    public XPathy descendant() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -364,7 +364,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy following_siblings(Tag tag) {
+    public XPathy following_sibling(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -374,7 +374,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy following_siblings() {
+    public XPathy following_sibling() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -384,7 +384,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy preceding_siblings(Tag tag) {
+    public XPathy preceding_sibling(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -394,7 +394,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy preceding_siblings() {
+    public XPathy preceding_sibling() {
 
         is_and_or_condition_appendable = false;
         reset_values();

@@ -39,10 +39,10 @@ public class _XPathValueTransformer_ {
 
         //---------- Trim
 
-        if (xPathy.is_normalize_space) {
+        if (xPathy.is_trim) {
             function = "translate(" + function + ", '\u00A0', ' ')";
             function = "normalize-space(" + function + ")";
-        } else if (xPathy.is_trim) {
+        } else if (xPathy.is_normalize_space) {
             function = "normalize-space(" + function + ")";
         }
 
@@ -97,10 +97,10 @@ public class _XPathValueTransformer_ {
 
         //---------- Trim
 
-        if (xPathy.is_normalize_space) {
+        if (xPathy.is_trim) {
             value = value.replace('\u00A0', ' ');
             value = value.trim().replaceAll("\\s{2,}", " ");
-        } else if (xPathy.is_trim) {
+        } else if (xPathy.is_normalize_space) {
             value = value.trim();
         }
 
