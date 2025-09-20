@@ -8,7 +8,7 @@ public class Tag {
         this.tag_name = tagName;
     }
 
-    public static final Tag ANY = new Tag("*");
+    public static final Tag any = new Tag("*");
 
     // Document metadata
     public static final Tag html = new Tag("html");
@@ -158,8 +158,16 @@ public class Tag {
     /**
      * Allows creation of custom or non-standard tag names.
      */
-    public static Tag CUSTOM(String tagName) {
+    public static Tag custom(String tagName) {
         return new Tag(tagName);
+    }
+
+    public static Tag create(String tagName){
+        return custom(tagName);
+    }
+
+    public static Tag of(String tagName){
+        return custom(tagName);
     }
 
     @Override
@@ -169,24 +177,32 @@ public class Tag {
 
     //===================================================================================================================
 
-    public _Text_ TEXT(){
-        return new XPathy(this).TEXT();
+    public _Text_ byText(){
+        return new XPathy(this).byText();
     }
 
-    public _Number_ NUMBER(){
-        return new XPathy(this).NUMBER();
+    public _Number_ byNumber(){
+        return new XPathy(this).byNumber();
     }
 
-    public _Attribute_ ATTRIBUTE(Attribute attribute){
-        return new XPathy(this).ATTRIBUTE(attribute);
+    public _Attribute_ byAttribute(Attribute attribute){
+        return new XPathy(this).byAttribute(attribute);
     }
 
-    public _Style_ STYLE(Style style){
-        return new XPathy(this).STYLE(style);
+    public _Style_ byStyle(Style style){
+        return new XPathy(this).byStyle(style);
     }
 
-    public __Having_Init_ HAVING(){
-        return new XPathy(this).HAVING();
+    public __Having_Init_ byHaving(){
+        return new XPathy(this).byHaving();
+    }
+
+    public XPathy byHaving(XPathy xPathy){
+        return new __HavingXpathTransformer_(new XPathy(Tag.of(this.tag_name))).direct(xPathy);
+    }
+
+    public XPathy byCondition(com.xpathy.Condition condition){
+        return new XPathy(this).byCondition(condition);
     }
 
     //================================================================================================================

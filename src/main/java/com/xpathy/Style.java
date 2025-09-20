@@ -114,7 +114,11 @@ public class Style {
     public static final Style clear = new Style("clear");
 
 
-    public static Style CUSTOM(String style){
+    public static Style custom(String style){
+        return new Style(style);
+    }
+
+    public static Style of(String style){
         return new Style(style);
     }
 
@@ -125,16 +129,16 @@ public class Style {
 
     //===========================================
 
-    public _Style_Not_ NOT(){
-        return new _Style_Not_( new XPathy(Tag.ANY), this);
+    public _Style_Not_ not(){
+        return new _Style_Not_( new XPathy(Tag.any), this);
     }
 
     public XPathy haveIt(){
-        return new XPathy(Tag.ANY).STYLE(this).haveIt();
+        return new XPathy(Tag.any).byStyle(this).haveIt();
     }
 
     public XPathy equals(String Value) {
-        return new XPathy(Tag.ANY).STYLE(this).equals(Value);
+        return new XPathy(Tag.any).byStyle(this).equals(Value);
     }
 
 

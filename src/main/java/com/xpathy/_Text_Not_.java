@@ -18,7 +18,7 @@ public class _Text_Not_ {
 
     //================================================
 
-    public XPathy OR(Or... orConditions) {
+    public XPathy union(Or... orConditions) {
         if (orConditions == null) {
             return this.xPathy;
         }
@@ -35,43 +35,43 @@ public class _Text_Not_ {
                 if (!orCondition.isNot) {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.TEXT().NOT().equals(orCondition.value);
+                            output = temp.byText().not().equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.TEXT().NOT().equals(orCondition.number);
+                            output = temp.byText().not().equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.TEXT().NOT().contains(orCondition.value);
+                            output = temp.byText().not().contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.TEXT().NOT().startsWith(orCondition.value);
+                            output = temp.byText().not().startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.TEXT().NOT().empty();
+                            output = temp.byText().not().empty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.TEXT().NOT().numeric();
+                            output = temp.byText().not().numeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.TEXT().NOT().greaterThan(orCondition.min);
+                            output = temp.byText().not().greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.TEXT().NOT().greaterThanOrEquals(orCondition.min);
+                            output = temp.byText().not().greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.TEXT().NOT().lessThan(orCondition.max);
+                            output = temp.byText().not().lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.TEXT().NOT().lessThanOrEquals(orCondition.max);
+                            output = temp.byText().not().lessThanOrEquals(orCondition.max);
                             break;
                     }
 
@@ -79,43 +79,43 @@ public class _Text_Not_ {
                 } else {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.TEXT().equals(orCondition.value);
+                            output = temp.byText().equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.TEXT().equals(orCondition.number);
+                            output = temp.byText().equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.TEXT().contains(orCondition.value);
+                            output = temp.byText().contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.TEXT().startsWith(orCondition.value);
+                            output = temp.byText().startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.TEXT().isEmpty();
+                            output = temp.byText().isEmpty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.TEXT().isNumeric();
+                            output = temp.byText().isNumeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.TEXT().greaterThan(orCondition.min);
+                            output = temp.byText().greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.TEXT().greaterThanOrEquals(orCondition.min);
+                            output = temp.byText().greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.TEXT().lessThan(orCondition.max);
+                            output = temp.byText().lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.TEXT().lessThanOrEquals(orCondition.max);
+                            output = temp.byText().lessThanOrEquals(orCondition.max);
                             break;
                     }
 
@@ -125,43 +125,43 @@ public class _Text_Not_ {
                 if (!orCondition.isNot) {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.OR().TEXT().NOT().equals(orCondition.value);
+                            output = temp.or().byText().not().equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.OR().TEXT().NOT().equals(orCondition.number);
+                            output = temp.or().byText().not().equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.OR().TEXT().NOT().contains(orCondition.value);
+                            output = temp.or().byText().not().contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.OR().TEXT().NOT().startsWith(orCondition.value);
+                            output = temp.or().byText().not().startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.OR().TEXT().NOT().empty();
+                            output = temp.or().byText().not().empty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.OR().TEXT().NOT().numeric();
+                            output = temp.or().byText().not().numeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.OR().TEXT().NOT().greaterThan(orCondition.min);
+                            output = temp.or().byText().not().greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.OR().TEXT().NOT().greaterThanOrEquals(orCondition.min);
+                            output = temp.or().byText().not().greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.OR().TEXT().NOT().lessThan(orCondition.max);
+                            output = temp.or().byText().not().lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.OR().TEXT().NOT().lessThanOrEquals(orCondition.max);
+                            output = temp.or().byText().not().lessThanOrEquals(orCondition.max);
                             break;
                     }
 
@@ -169,43 +169,43 @@ public class _Text_Not_ {
                 } else {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.OR().TEXT().equals(orCondition.value);
+                            output = temp.or().byText().equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.OR().TEXT().equals(orCondition.number);
+                            output = temp.or().byText().equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.OR().TEXT().contains(orCondition.value);
+                            output = temp.or().byText().contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.OR().TEXT().startsWith(orCondition.value);
+                            output = temp.or().byText().startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.OR().TEXT().isEmpty();
+                            output = temp.or().byText().isEmpty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.OR().TEXT().isNumeric();
+                            output = temp.or().byText().isNumeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.OR().TEXT().greaterThan(orCondition.min);
+                            output = temp.or().byText().greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.OR().TEXT().greaterThanOrEquals(orCondition.min);
+                            output = temp.or().byText().greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.OR().TEXT().lessThan(orCondition.max);
+                            output = temp.or().byText().lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.OR().TEXT().lessThanOrEquals(orCondition.max);
+                            output = temp.or().byText().lessThanOrEquals(orCondition.max);
                             break;
                     }
 
@@ -218,7 +218,7 @@ public class _Text_Not_ {
 
     //=====================================
 
-    public XPathy AND(And... andConditions) {
+    public XPathy intersect(And... andConditions) {
         if (andConditions == null) {
             return this.xPathy;
         }
@@ -235,67 +235,67 @@ public class _Text_Not_ {
                 if (!andCondition.isNot) {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.TEXT().NOT().equals(andCondition.value);
+                            output = temp.byText().not().equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.TEXT().NOT().equals(andCondition.number);
+                            output = temp.byText().not().equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.TEXT().NOT().contains(andCondition.value);
+                            output = temp.byText().not().contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.TEXT().NOT().startsWith(andCondition.value);
+                            output = temp.byText().not().startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.TEXT().NOT().empty();
+                            output = temp.byText().not().empty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.TEXT().NOT().numeric();
+                            output = temp.byText().not().numeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.TEXT().NOT().greaterThan(andCondition.min);
+                            output = temp.byText().not().greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.TEXT().NOT().greaterThanOrEquals(andCondition.min);
+                            output = temp.byText().not().greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.TEXT().NOT().lessThan(andCondition.max);
+                            output = temp.byText().not().lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.TEXT().NOT().lessThanOrEquals(andCondition.max);
+                            output = temp.byText().not().lessThanOrEquals(andCondition.max);
                             break;
                     }
                 } else {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.TEXT().equals(andCondition.value);
+                            output = temp.byText().equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.TEXT().equals(andCondition.number);
+                            output = temp.byText().equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.TEXT().contains(andCondition.value);
+                            output = temp.byText().contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.TEXT().startsWith(andCondition.value);
+                            output = temp.byText().startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.TEXT().isEmpty();
+                            output = temp.byText().isEmpty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.TEXT().isNumeric();
+                            output = temp.byText().isNumeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.TEXT().greaterThan(andCondition.min);
+                            output = temp.byText().greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.TEXT().greaterThanOrEquals(andCondition.min);
+                            output = temp.byText().greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.TEXT().lessThan(andCondition.max);
+                            output = temp.byText().lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.TEXT().lessThanOrEquals(andCondition.max);
+                            output = temp.byText().lessThanOrEquals(andCondition.max);
                             break;
                     }
                 }
@@ -303,67 +303,67 @@ public class _Text_Not_ {
                 if (!andCondition.isNot) {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.AND().TEXT().NOT().equals(andCondition.value);
+                            output = temp.and().byText().not().equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.AND().TEXT().NOT().equals(andCondition.number);
+                            output = temp.and().byText().not().equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.AND().TEXT().NOT().contains(andCondition.value);
+                            output = temp.and().byText().not().contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.AND().TEXT().NOT().startsWith(andCondition.value);
+                            output = temp.and().byText().not().startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.AND().TEXT().NOT().empty();
+                            output = temp.and().byText().not().empty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.AND().TEXT().NOT().numeric();
+                            output = temp.and().byText().not().numeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.AND().TEXT().NOT().greaterThan(andCondition.min);
+                            output = temp.and().byText().not().greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.AND().TEXT().NOT().greaterThanOrEquals(andCondition.min);
+                            output = temp.and().byText().not().greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.AND().TEXT().NOT().lessThan(andCondition.max);
+                            output = temp.and().byText().not().lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.AND().TEXT().NOT().lessThanOrEquals(andCondition.max);
+                            output = temp.and().byText().not().lessThanOrEquals(andCondition.max);
                             break;
                     }
                 } else {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.AND().TEXT().equals(andCondition.value);
+                            output = temp.and().byText().equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.AND().TEXT().equals(andCondition.number);
+                            output = temp.and().byText().equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.AND().TEXT().contains(andCondition.value);
+                            output = temp.and().byText().contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.AND().TEXT().startsWith(andCondition.value);
+                            output = temp.and().byText().startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.AND().TEXT().isEmpty();
+                            output = temp.and().byText().isEmpty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.AND().TEXT().isNumeric();
+                            output = temp.and().byText().isNumeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.AND().TEXT().greaterThan(andCondition.min);
+                            output = temp.and().byText().greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.AND().TEXT().greaterThanOrEquals(andCondition.min);
+                            output = temp.and().byText().greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.AND().TEXT().lessThan(andCondition.max);
+                            output = temp.and().byText().lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.AND().TEXT().lessThanOrEquals(andCondition.max);
+                            output = temp.and().byText().lessThanOrEquals(andCondition.max);
                             break;
                     }
                 }

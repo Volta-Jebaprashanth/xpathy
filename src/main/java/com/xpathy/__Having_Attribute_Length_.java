@@ -19,38 +19,38 @@ public class __Having_Attribute_Length_ {
         return new __Having_Attribute_Length_(this.attribute, this.xPathy);
     }
 
-    public __Having_Attribute_Length_ TRIM() {
+    public __Having_Attribute_Length_ withTrim() {
         __Having_Attribute_Length_ copy = this.copy();
         copy.xPathy.is_trim = true;
         return copy;
     }
 
-    public __Having_Attribute_Length_ NORMALIZE_SPACE() {
+    public __Having_Attribute_Length_ withNormalizeSpace() {
         __Having_Attribute_Length_ copy = this.copy();
         copy.xPathy.is_normalize_space = true;
         return copy;
     }
 
-    public __Having_Attribute_Length_ CASE(Case thisCase) {
+    public __Having_Attribute_Length_ withCase(Case thisCase) {
         __Having_Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setCase(thisCase);
         return copy;
     }
 
-    public __Having_Attribute_Length_ REMOVE(Only... onlyItems) {
+    public __Having_Attribute_Length_ withRemoveOnly(Only... onlyItems) {
         __Having_Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setRemoveChars(onlyItems);
         return copy;
     }
 
 
-    public __Having_Attribute_Length_ KEEP(Only... onlyItems) {
+    public __Having_Attribute_Length_ withKeepOnly(Only... onlyItems) {
         __Having_Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setKeepOnlyChars(onlyItems);
         return copy;
     }
 
-    public __Having_Attribute_Length_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public __Having_Attribute_Length_ withTranslate(String charactersToReplace, String replacementCharacters) {
         __Having_Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setTranslate(charactersToReplace, replacementCharacters);
         return copy;
@@ -58,7 +58,7 @@ public class __Having_Attribute_Length_ {
 
     //----------------------------
 
-    public __Having_Attribute_Length_Not_ NOT(){
+    public __Having_Attribute_Length_Not_ not(){
         return new __Having_Attribute_Length_Not_(this.attribute, this.xPathy);
     }
 

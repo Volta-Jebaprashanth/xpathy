@@ -16,43 +16,43 @@ public class _Text_Length_ {
         return new _Text_Length_(this);
     }
 
-    public _Text_Length_Not_ NOT() {
+    public _Text_Length_Not_ not() {
         return new _Text_Length_Not_(this.xPathy);
     }
 
 
-    public _Text_Length_ TRIM() {
+    public _Text_Length_ withTrim() {
         _Text_Length_ copy = this.copy();
         copy.xPathy.is_trim = true;
         return copy;
     }
 
-    public _Text_Length_ NORMALIZE_SPACE() {
+    public _Text_Length_ withNormalizeSpace() {
         _Text_Length_ copy = this.copy();
         copy.xPathy.is_normalize_space = true;
         return copy;
     }
 
-    public _Text_Length_ CASE(Case thisCase) {
+    public _Text_Length_ withCase(Case thisCase) {
         _Text_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setCase(thisCase);
         return copy;
     }
 
-    public _Text_Length_ REMOVE(Only... onlyItems) {
+    public _Text_Length_ withRemoveOnly(Only... onlyItems) {
         _Text_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setRemoveChars(onlyItems);
         return copy;
     }
 
 
-    public _Text_Length_ KEEP(Only... onlyItems) {
+    public _Text_Length_ withKeepOnly(Only... onlyItems) {
         _Text_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setKeepOnlyChars(onlyItems);
         return copy;
     }
 
-    public _Text_Length_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public _Text_Length_ withTranslate(String charactersToReplace, String replacementCharacters) {
         _Text_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setTranslate(charactersToReplace, replacementCharacters);
         return copy;

@@ -13,31 +13,31 @@ public class Condition {
         this.conditionType = type;
     }
 
-    public static Condition AND(Condition... conditions){
+    public static Condition and(Condition... conditions){
         Condition condition = new Condition(ConditionType.AND);
         condition.conditions = conditions;
         return condition;
     }
 
-    public static Condition AND(){
+    public static Condition and(){
         Condition condition = new Condition(ConditionType.AND);
         condition.isSkip = true;
         return condition;
     }
 
-    public static Condition OR(Condition... conditions){
+    public static Condition or(Condition... conditions){
         Condition condition = new Condition(ConditionType.OR);
         condition.conditions = conditions;
         return condition;
     }
 
-    public static Condition OR(){
+    public static Condition or(){
         Condition condition = new Condition(ConditionType.OR);
         condition.isSkip = true;
         return condition;
     }
 
-    public static Condition NOT(Condition condition){
+    public static Condition not(Condition condition){
         Condition condition1 =  new Condition(ConditionType.NOT);
         condition1.conditions = new Condition[]{condition};
         return condition1;
@@ -45,19 +45,19 @@ public class Condition {
 
     }
 
-    public static _Condition_Attribute_ ATTRIBUTE(Attribute attribute){
+    public static _Condition_Attribute_ attribute(Attribute attribute){
         return new _Condition_Attribute_(attribute);
     }
 
-    public static _Condition_Text_ TEXT(){
+    public static _Condition_Text_ text(){
         return new _Condition_Text_();
     }
 
-    public static _Condition_Number_ NUMBER(){
+    public static _Condition_Number_ number(){
         return new _Condition_Number_();
     }
 
-    public static _Condition_Style_ STYLE(Style style){
+    public static _Condition_Style_ style(Style style){
         return new _Condition_Style_(style);
     }
 

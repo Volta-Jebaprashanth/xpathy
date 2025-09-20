@@ -9,7 +9,7 @@ public class Attribute {
     }
 
     // Global attributes
-    public static final Attribute ANY = new Attribute("*");
+    public static final Attribute any = new Attribute("*");
     public static final Attribute accesskey = new Attribute("accesskey");
     public static final Attribute autocapitalize = new Attribute("autocapitalize");
     public static final Attribute class_ = new Attribute("class"); // 'class' is a reserved word
@@ -67,7 +67,15 @@ public class Attribute {
     /**
      * Creates a custom attribute, such as data-* or aria-*.
      */
-    public static Attribute CUSTOM(String attributeName) {
+    public static Attribute custom(String attributeName) {
+        return new Attribute(attributeName);
+    }
+
+    public static Attribute of(String attributeName) {
+        return new Attribute(attributeName);
+    }
+
+    public static Attribute create(String attributeName) {
         return new Attribute(attributeName);
     }
 
@@ -78,105 +86,117 @@ public class Attribute {
 
     //==================================================================
 
-    public _Attribute_Not_ NOT() {
-        return new _Attribute_Not_(new XPathy(Tag.ANY), this);
+    public _Attribute_Not_ not() {
+        return new _Attribute_Not_(new XPathy(Tag.any), this);
     }
 
-    public _Attribute_Length_ LENGTH() {
-        return new _Attribute_Length_(new XPathy(Tag.ANY), this);
+    public _Attribute_Length_ byLength() {
+        return new _Attribute_Length_(new XPathy(Tag.any), this);
     }
 
 
-    public _Attribute_ TRIM() {
+    //===================================================================
 
-        XPathy xPathy = new XPathy(Tag.ANY);
+    public XPathy union(Or... orConditions){
+        return new XPathy(Tag.any).byAttribute(this).union(orConditions);
+    }
+
+    public XPathy intersect(And... andConditions){
+        return new XPathy(Tag.any).byAttribute(this).intersect(andConditions);
+    }
+
+    //===================================================================
+
+    public _Attribute_ withTrim() {
+
+        XPathy xPathy = new XPathy(Tag.any);
         xPathy.is_trim = true;
 
         return new _Attribute_(xPathy, this);
     }
 
 
-    public _Attribute_ NORMALIZE_SPACE() {
+    public _Attribute_ withNormalizeSpace() {
 
-        XPathy xPathy = new XPathy(Tag.ANY);
+        XPathy xPathy = new XPathy(Tag.any);
         xPathy.is_normalize_space = true;
 
         return new _Attribute_(xPathy, this);
 
     }
 
-    public _Attribute_ CASE(Case thisCase) {
+    public _Attribute_ withCase(Case thisCase) {
 
-        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.ANY)).setCase(thisCase);
+        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.any)).setCase(thisCase);
         return new _Attribute_(xPathy, this);
 
     }
 
-    public _Attribute_ REMOVE(Only... onlyItems) {
+    public _Attribute_ withRemoveOnly(Only... onlyItems) {
 
-        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.ANY)).setRemoveChars(onlyItems);
+        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.any)).setRemoveChars(onlyItems);
         return new _Attribute_(xPathy, this);
 
     }
 
-    public _Attribute_ KEEP(Only... onlyItems) {
+    public _Attribute_ withKeepOnly(Only... onlyItems) {
 
-        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.ANY)).setKeepOnlyChars(onlyItems);
+        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.any)).setKeepOnlyChars(onlyItems);
         return new _Attribute_(xPathy, this);
     }
 
-    public _Attribute_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public _Attribute_ withTranslate(String charactersToReplace, String replacementCharacters) {
 
-        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.ANY)).setTranslate(charactersToReplace, replacementCharacters);
+        XPathy xPathy = new _TranslateBuilder_(new XPathy(Tag.any)).setTranslate(charactersToReplace, replacementCharacters);
         return new _Attribute_(xPathy, this);
     }
 
     //=================================================================
 
     public XPathy haveIt() {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).haveIt();
+        return new XPathy(Tag.any).byAttribute(this).haveIt();
 
     }
 
     public XPathy equals(String equalValue) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).equals(equalValue);
+        return new XPathy(Tag.any).byAttribute(this).equals(equalValue);
     }
 
     public XPathy contains(String partialValue) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).contains(partialValue);
+        return new XPathy(Tag.any).byAttribute(this).contains(partialValue);
     }
 
     public XPathy startsWith(String prefix) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).startsWith(prefix);
+        return new XPathy(Tag.any).byAttribute(this).startsWith(prefix);
     }
 
     public XPathy isEmpty() {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).isEmpty();
+        return new XPathy(Tag.any).byAttribute(this).isEmpty();
     }
 
     public XPathy isNumeric() {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).isNumeric();
+        return new XPathy(Tag.any).byAttribute(this).isNumeric();
     }
 
 
     public XPathy equals(Number number) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).equals(number);
+        return new XPathy(Tag.any).byAttribute(this).equals(number);
     }
 
     public XPathy greaterThan(Number number) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).greaterThan(number);
+        return new XPathy(Tag.any).byAttribute(this).greaterThan(number);
     }
 
     public XPathy greaterThanOrEquals(Number number) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).greaterThanOrEquals(number);
+        return new XPathy(Tag.any).byAttribute(this).greaterThanOrEquals(number);
     }
 
     public XPathy lessThan(Number number) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).lessThan(number);
+        return new XPathy(Tag.any).byAttribute(this).lessThan(number);
     }
 
     public XPathy lessThanOrEquals(Number number) {
-        return new XPathy(Tag.ANY).ATTRIBUTE(this).lessThanOrEquals(number);
+        return new XPathy(Tag.any).byAttribute(this).lessThanOrEquals(number);
     }
 
 

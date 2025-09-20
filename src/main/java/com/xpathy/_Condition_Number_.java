@@ -13,37 +13,37 @@ public class _Condition_Number_ {
         return copy;
     }
 
-    public _Condition_Number_ TRIM() {
+    public _Condition_Number_ withTrim() {
         _Condition_Number_ copy = this.copy();
         copy.xPathy.is_trim = true;
         return copy;
     }
 
-    public _Condition_Number_ NORMALIZE_SPACE() {
+    public _Condition_Number_ withNormalizeSpace() {
         _Condition_Number_ copy = this.copy();
         copy.xPathy.is_normalize_space = true;
         return copy;
     }
 
-    public _Condition_Number_ CASE(Case thisCase) {
+    public _Condition_Number_ withCase(Case thisCase) {
         _Condition_Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setCase(thisCase);
         return copy;
     }
 
-    public _Condition_Number_ REMOVE(Only... onlyItems) {
+    public _Condition_Number_ withRemoveOnly(Only... onlyItems) {
         _Condition_Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setRemoveChars(onlyItems);
         return copy;
     }
 
-    public _Condition_Number_ KEEP(Only... onlyItems) {
+    public _Condition_Number_ withKeepOnly(Only... onlyItems) {
         _Condition_Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setKeepOnlyChars(onlyItems);
         return copy;
     }
 
-    public _Condition_Number_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public _Condition_Number_ withTranslate(String charactersToReplace, String replacementCharacters) {
         _Condition_Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setTranslate(charactersToReplace, replacementCharacters);
         return copy;
@@ -54,42 +54,42 @@ public class _Condition_Number_ {
 
     public Condition equals(Number number) {
         Condition condition = new Condition(Condition.ConditionType.TEXT);
-        XPathy xPathy = this.xPathy.NUMBER().equals(number).copy();
+        XPathy xPathy = this.xPathy.byNumber().equals(number).copy();
         condition.condition = Condition.extractConditionString_fromXpath(xPathy);
         return condition;
     }
 
     public Condition greaterThan(Number number) {
         Condition condition = new Condition(Condition.ConditionType.TEXT);
-        XPathy xPathy = this.xPathy.NUMBER().greaterThan(number).copy();
+        XPathy xPathy = this.xPathy.byNumber().greaterThan(number).copy();
         condition.condition = Condition.extractConditionString_fromXpath(xPathy);
         return condition;
     }
 
     public Condition greaterThanOrEquals(Number number) {
         Condition condition = new Condition(Condition.ConditionType.TEXT);
-        XPathy xPathy = this.xPathy.NUMBER().greaterThanOrEquals(number).copy();
+        XPathy xPathy = this.xPathy.byNumber().greaterThanOrEquals(number).copy();
         condition.condition = Condition.extractConditionString_fromXpath(xPathy);
         return condition;
     }
 
     public Condition lessThan(Number number) {
         Condition condition = new Condition(Condition.ConditionType.TEXT);
-        XPathy xPathy = this.xPathy.NUMBER().lessThan(number).copy();
+        XPathy xPathy = this.xPathy.byNumber().lessThan(number).copy();
         condition.condition = Condition.extractConditionString_fromXpath(xPathy);
         return condition;
     }
 
     public Condition lessThanOrEquals(Number number) {
         Condition condition = new Condition(Condition.ConditionType.TEXT);
-        XPathy xPathy = this.xPathy.NUMBER().lessThanOrEquals(number).copy();
+        XPathy xPathy = this.xPathy.byNumber().lessThanOrEquals(number).copy();
         condition.condition = Condition.extractConditionString_fromXpath(xPathy);
         return condition;
     }
 
     public Condition between(Number min, Number max) {
         Condition condition = new Condition(Condition.ConditionType.TEXT);
-        XPathy xPathy = this.xPathy.NUMBER().between(min, max).copy();
+        XPathy xPathy = this.xPathy.byNumber().between(min, max).copy();
         condition.condition = Condition.extractConditionString_fromXpath(xPathy);
         return condition;
     }

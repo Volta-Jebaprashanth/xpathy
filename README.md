@@ -44,7 +44,7 @@ To use this library in your **Maven** project (pom.xml):
   <dependency>
     <groupId>com.github.Volta-Jebaprashanth</groupId>
     <artifactId>xpathy</artifactId>
-    <version>2.0.4/version>
+    <version>3.0.0</version>
   </dependency>
 </dependencies>
 ```
@@ -79,8 +79,8 @@ XPathy.of(Tag.div);                      // Alias for from(...)
 ### 🔸 From Tag
 
 ```java
-Tag.span.ATTRIBUTE(Attribute.id).equals("value");
-Tag.button.TEXT().contains("Click me");
+Tag.span.byAttribute(Attribute.id).equals("value");
+Tag.button.byText().contains("Click me");
 ```
 
 ### 🔸 From Attribute
@@ -110,15 +110,15 @@ Style.backgroundColor.equals("red");
 ### 🔸 Attribute and Text Filters
 
 ```java
-xpathy.ATTRIBUTE(Attribute.id).equals("value");
-xpathy.TEXT().contains("partial");
-xpathy.NUMBER().greaterThan(10);
+xpathy.byAttribute(Attribute.id).equals("value");
+xpathy.byText().contains("partial");
+xpathy.byNumber().greaterThan(10);
 ```
 
 ### 🔸 Style Filters
 
 ```java
-xpathy.STYLE(Style.marginTop).equals("12px");
+xpathy.byStyle(Style.marginTop).equals("12px");
 ```
 
 ### 🔸 Indexing
@@ -139,63 +139,63 @@ XPathy supports a variety of transformation flags that modify the way attribute 
 These are used to keep or remove specific character groups from the target string before applying the condition.
 
 ```java
-.KEEP(Only.SPACES)
+.withKeepOnly(Only.SPACES)
 ```
 
 ```java
 new XPathy(Tag.div)
-  .TEXT().KEEP(Only.ENGLISH_ALPHABETS).equals("hello world");
+  .byText().withKeepOnly(Only.ENGLISH_ALPHABETS).equals("hello world");
 ```
 
 **What it does:** Keeps only spaces in the original text and removes all other characters before comparison. In this case, only spaces in the string "hello world" are preserved for the equality check.
 
 ```java
-.REMOVE(Only.SPACES, Only.NUMBERS)
+.withRemoveOnly(Only.SPACES, Only.NUMBERS)
 ```
 ```java
 new XPathy(Tag.input)
-  .ATTRIBUTE(Attribute.name).REMOVE(Only.SPACES, Only.NUMBERS).equals("test-user");
+  .byAttribute(Attribute.name).withRemoveOnly(Only.SPACES, Only.NUMBERS).equals("test-user");
 ```
 
 **What it does:** Removes all spaces and digits from the "name" attribute's value before applying the equals("test-user") condition.
 
 ### 🔸 TRANSLATE
 ```java
-.TRANSLATE("éàè", "eae")
+.withTranslate("éàè", "eae")
 ```
 ```java
 new XPathy(Tag.label)
-  .TEXT().TRANSLATE("éàè", "eae").equals("Cafe");
+  .byText().withTranslate("éàè", "eae").equals("Cafe");
 ```
 
 **What it does:** Translates all occurrences of 'é', 'à', and 'è' into 'e', 'a', and 'e' respectively before comparison. Useful for internationalized strings.
 
 ### 🔸 CASE and Normalization
 ```java
-.CASE(Case.LOWER)
+.withCase(Case.LOWER)
 ```
 ```java
 new XPathy(Tag.div)
-  .TEXT().CASE(Case.LOWER).equals("status");
+  .byText().withCase(Case.LOWER).equals("status");
 ```
 
 **What it does:** Converts the text to lowercase before checking if it equals "status".
 
 ```java
-.TRIM()
+.withTrim()
 ```
 ```java
 new XPathy(Tag.span)
-  .TEXT().TRIM().equals("Submit");
+  .byText().withTrim().equals("Submit");
 ```
 
 **What it does:** Removes any leading/trailing whitespace from the text before checking if it equals "Submit".
 ```java
-.NORMALIZE_SPACE()
+.withNormalizeSpace()
 ```
 ```java
 new XPathy(Tag.span)
-  .TEXT().NORMALIZE_SPACE().contains("welcome back");
+  .byText().withNormalizeSpace().contains("welcome back");
 ```
 
 **What it does:** Normalizes spacing by replacing multiple spaces with a single space and trimming whitespace.
@@ -213,18 +213,18 @@ XPathy supports a variety of transformation flags that modify the way attribute 
 ### 🔸 AND / OR / NOT
 
 ```java
-.AND()
-.OR()
-.NOT()
+.and()
+.or()
+.not()
 ```
 
 Used between filters to logically combine multiple conditions:
 
 ```java
 new XPathy(Tag.input)
-  .ATTRIBUTE(Attribute.name).equals("username")
-  .AND().ATTRIBUTE(Attribute.type).equals("text")
-  .AND().TEXT().NOT().equals("Guest");
+  .byAttribute(Attribute.name).equals("username")
+  .and().byAttribute(Attribute.type).equals("text")
+  .and().byText().not().equals("Guest");
 ```
 
 ---
@@ -236,9 +236,9 @@ XPathy provides convenient methods to traverse the DOM tree in any direction. Th
 ### 🔼 Upward
 
 ```java
-.parent();              // Move one level up in the DOM
-.parent(Tag.div);       // Move to the parent if it's a <div>
-.up(2);                 // Move two levels up from the current element
+.$parent();              // Move one level up in the DOM
+.$parent(Tag.div);       // Move to the parent if it's a <div>
+.$up(2);                 // Move two levels up from the current element
 ```
 
 **What it does:** Enables you to go from a deeply nested element to its parent(s), commonly used for relative matching.
@@ -246,10 +246,10 @@ XPathy provides convenient methods to traverse the DOM tree in any direction. Th
 ### 🔽 Downward
 
 ```java
-.child();            // Get all direct children
-.child(Tag.div);     // Get only direct children with a specific tag
-.descendant();         // Get all descendant nodes
-.descendant(Tag.span); // Get all descendants matching a specific tag
+.$child();            // Get all direct children
+.$child(Tag.div);     // Get only direct children with a specific tag
+.$descendant();         // Get all descendant nodes
+.$descendant(Tag.span); // Get all descendants matching a specific tag
 ```
 
 **What it does:** Select elements nested within the current node, either directly or at any depth.
@@ -257,10 +257,10 @@ XPathy provides convenient methods to traverse the DOM tree in any direction. Th
 ### 🔁 Siblings
 
 ```java
-.following_sibling();             // All following siblings
-.following_sibling(Tag.div);     // Following siblings that are <div>
-.preceding_sibling();            // All preceding siblings
-.preceding_sibling(Tag.div);     // Preceding siblings that are <div>
+.$followingSibling();             // All following siblings
+.$followingSibling(Tag.div);     // Following siblings that are <div>
+.$precedingSibling();            // All preceding siblings
+.$precedingSibling(Tag.div);     // Preceding siblings that are <div>
 ```
 
 **What it does:** Navigates horizontally in the DOM, useful when elements are on the same level and have similar structure (like rows or columns).
@@ -274,14 +274,14 @@ XPathy provides convenient methods to traverse the DOM tree in any direction. Th
 ### 🔸 With Text
 
 ```java
-.TEXT().greaterThan(10);
-.NUMBER().lessThanOrEquals(50);
+.byText().greaterThan(10);
+.byNumber().lessThanOrEquals(50);
 ```
 
 ### 🔸 With Attributes
 
 ```java
-.ATTRIBUTE(Attribute.dataIndex).greaterOrEquals(5);
+.byAttribute(Attribute.dataIndex).greaterOrEquals(5);
 ```
 
 ---
@@ -293,21 +293,21 @@ The `HAVING()` clause in XPathy is used to apply conditions on sub-elements or a
 ### 🔸 Examples
 
 ```java
-new XPathy().HAVING().ANY_CHILD().TEXT().contains("value");
+new XPathy().byHaving().child().byText().contains("value");
 ```
 
 **What it does:** Selects the current element only if it has at least one child whose text contains "value".
 
 ```java
 new XPathy(Tag.div)
-  .HAVING().ANY_DESCENDANT().ATTRIBUTE(Attribute.class_).equals("highlight");
+  .byHaving().descendant().byAttribute(Attribute.class_).equals("highlight");
 ```
 
 **What it does:** Selects  elements that contain any descendant with a class attribute of "highlight".
 
 ```java
 new XPathy(Tag.section)
-  .HAVING().ANY_CHILD(Tag.p).TEXT().startsWith("Note");
+  .byHaving().child(Tag.p).byText().startsWith("Note");
 ```
 
 **What it does:** Selects  nodes that have a direct  child whose text starts with "Note".
@@ -335,40 +335,40 @@ Apply conditions to sub-elements or node content.
 
 ```java
 new XPathy(Tag.div)
-  .ATTRIBUTE(Attribute.id).equals("container")
-  .AND().TEXT().contains("Welcome")
+  .byAttribute(Attribute.id).equals("container")
+  .and().byText().contains("Welcome")
   .getLocator();
 ```
 
 ### 2. Parent and Sibling Traversal
 
 ```java
-new XPathy(Tag.div).ATTRIBUTE(Attribute.class_).contains("products")
-  .parent(Tag.tr)
-  .following_sibling(Tag.tr)
-  .ATTRIBUTE(Attribute.dataIndex).greaterThan(5);
+new XPathy(Tag.div).byAttribute(Attribute.class_).contains("products")
+  .$parent(Tag.tr)
+  .$followingSibling(Tag.tr)
+  .byAttribute(Attribute.dataIndex).greaterThan(5);
 ```
 
 ### 3. Transform, Normalize, Translate
 
 ```java
 new XPathy(Tag.label)
-  .TEXT().TRIM().CASE(Case.UPPER).TRANSLATE("Ä", "A").startsWith("ABCD");
+  .byText().withTrim().withCase(Case.UPPER).withTranslate("Ä", "A").startsWith("ABCD");
 ```
 
 ### 4. Using HAVING with Length Check
 
 ```java
-new XPathy(Tag.button).TEXT().contains("Submit")
-  .AND()
-  .HAVING().ANY_CHILD().TEXT().LENGTH().greaterThan(6);
+new XPathy(Tag.button).byText().contains("Submit")
+  .and()
+  .byHaving().child().byText().length().greaterThan(6);
 ```
 
 ### 5. OR Condition
 
 ```java
-new XPathy(Tag.a).TEXT().equals("Details")
-  .OR().TEXT().equals("Other Details");
+new XPathy(Tag.a).byText().equals("Details")
+  .or().byText().equals("Other Details");
 ```
 
 

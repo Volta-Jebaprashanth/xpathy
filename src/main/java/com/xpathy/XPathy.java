@@ -63,33 +63,37 @@ public class XPathy {
 //        return copy;
 //    }
 
-    public _Attribute_ ATTRIBUTE(Attribute attribute) {
+    public _Attribute_ byAttribute(Attribute attribute) {
         return new _Attribute_(this, attribute);
     }
 
-    public _Number_ NUMBER() {
+    public _Number_ byNumber() {
         return new _Number_(this);
     }
 
-    public _Text_ TEXT() {
+    public _Text_ byText() {
         return new _Text_(this);
     }
 
-    public _Style_ STYLE(Style style) {
+    public _Style_ byStyle(Style style) {
         return new _Style_(this, style);
     }
 
-    public __Having_Init_ HAVING(){
+    public __Having_Init_ byHaving(){
         return new __Having_Init_(this);
     }
 
-    public _XPathy_And_ AND() {
+    public XPathy byHaving(XPathy xPathy){
+        return new __HavingXpathTransformer_(this.copy()).direct(xPathy);
+    }
+
+    public _XPathy_And_ and() {
         XPathy copy = this.copy();
         copy.condition = Condition.AND;
         return new _XPathy_And_(copy);
     }
 
-    public _XPathy_Or_ OR() {
+    public _XPathy_Or_ or() {
         XPathy copy = this.copy();
         copy.condition = Condition.OR;
         return new _XPathy_Or_(copy);
@@ -97,7 +101,7 @@ public class XPathy {
 
     //======================================== CONSTRUCTORS ========================================
 
-    private static final String TAG_ANY = new XPathy(Tag.ANY).getXpath();
+    private static final String TAG_ANY = new XPathy(Tag.any).getXpath();
     public XPathy() {
         this.xpath = TAG_ANY;
     }
@@ -246,7 +250,7 @@ public class XPathy {
 
     //======================================== DOM NAVIGATION ========================================
 
-    public XPathy tag(Tag tag) {
+    public XPathy $tag(Tag tag) {
 
         this.is_and_or_condition_appendable = false;
 
@@ -270,7 +274,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy parent(Tag tag) {
+    public XPathy $parent(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -280,7 +284,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy parent() {
+    public XPathy $parent() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -290,11 +294,11 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy up() {
-        return parent();
+    public XPathy $up() {
+        return $parent();
     }
 
-    public XPathy up(int count) {
+    public XPathy $up(int count) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -304,7 +308,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy ancestor(Tag tag) {
+    public XPathy $ancestor(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -314,7 +318,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy ancestor() {
+    public XPathy $ancestor() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -324,7 +328,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy child(Tag tag) {
+    public XPathy $child(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -334,7 +338,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy child() {
+    public XPathy $child() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -344,7 +348,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy descendant(Tag tag) {
+    public XPathy $descendant(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -354,7 +358,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy descendant() {
+    public XPathy $descendant() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -364,7 +368,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy following_sibling(Tag tag) {
+    public XPathy $followingSibling(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -374,7 +378,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy following_sibling() {
+    public XPathy $followingSibling() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -384,7 +388,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy preceding_sibling(Tag tag) {
+    public XPathy $precedingSibling(Tag tag) {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -394,7 +398,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy preceding_sibling() {
+    public XPathy $precedingSibling() {
 
         is_and_or_condition_appendable = false;
         reset_values();
@@ -416,7 +420,7 @@ public class XPathy {
 //        return copy;
 //    }
 
-    public XPathy OR(By by) {
+    public XPathy or(By by) {
 
         is_and_or_condition_appendable = false;
 
@@ -425,16 +429,7 @@ public class XPathy {
         return copy;
     }
 
-//    public XPathy or() {
-//
-//        is_and_or_condition_appendable = false;
-//
-//        XPathy copy = this.copy();
-//        copy.xpath = this.xpath + " | " + TAG_ANY;
-//        return copy;
-//    }
-
-    public XPathy OR(XPathy xPathy) {
+    public XPathy or(XPathy xPathy) {
 
         is_and_or_condition_appendable = false;
 
@@ -443,7 +438,7 @@ public class XPathy {
         return copy;
     }
 
-    public XPathy OR(XPathy... xPathies) {
+    public XPathy or(XPathy... xPathies) {
 
         is_and_or_condition_appendable = false;
 
@@ -498,7 +493,7 @@ public class XPathy {
 
     //===========================================
 
-    public XPathy CONDITION(com.xpathy.Condition condition){
+    public XPathy byCondition(com.xpathy.Condition condition){
         XPathy copy = this.copy();
         copy.is_and_or_condition_appendable = false;
         copy.reset_values();

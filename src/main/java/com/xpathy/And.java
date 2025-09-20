@@ -23,38 +23,38 @@ public class And {
 
     //===============================================================
 
-    public static _And_Not_ NOT() {
+    public static _And_Not_ not() {
         return new _And_Not_(new And(new XPathy()));
     }
 
-    public static _And_Manipulation_ TRIM() {
+    public static _And_Manipulation_ withTrim() {
         XPathy xPathy = new XPathy();
         xPathy.is_trim = true;
         return new _And_Manipulation_(new And(xPathy));
     }
 
-    public static _And_Manipulation_ NORMALIZE_SPACE() {
+    public static _And_Manipulation_ withNormalizeSpace() {
         XPathy xPathy = new XPathy();
         xPathy.is_normalize_space = true;
         return new _And_Manipulation_(new And(xPathy));
     }
 
-    public static _And_Manipulation_ CASE(Case thisCase) {
+    public static _And_Manipulation_ withCase(Case thisCase) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setCase(thisCase);
         return new _And_Manipulation_(new And(xPathy));
     }
 
-    public static _And_Manipulation_ REMOVE(Only... onlyItems) {
+    public static _And_Manipulation_ withRemoveOnly(Only... onlyItems) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setRemoveChars(onlyItems);
         return new _And_Manipulation_(new And(xPathy));
     }
 
-    public static _And_Manipulation_ KEEP(Only... onlyItems) {
+    public static _And_Manipulation_ withKeepOnly(Only... onlyItems) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setKeepOnlyChars(onlyItems);
         return new _And_Manipulation_(new And(xPathy));
     }
 
-    public static _And_Manipulation_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public static _And_Manipulation_ withTranslate(String charactersToReplace, String replacementCharacters) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setTranslate(charactersToReplace, replacementCharacters);
         return new _And_Manipulation_(new And(xPathy));
     }

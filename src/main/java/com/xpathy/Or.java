@@ -24,39 +24,39 @@ public class Or {
 
     //=====================================================================
 
-    public static _Or_Not_ NOT(){
+    public static _Or_Not_ not(){
         return new _Or_Not_(new Or(new XPathy()));
     }
 
-    public static _Or_Manipulation_ TRIM() {
+    public static _Or_Manipulation_ withTrim() {
         XPathy xPathy = new XPathy();
         xPathy.is_trim = true;
         return new _Or_Manipulation_(new Or(xPathy));
     }
 
 
-    public static _Or_Manipulation_ NORMALIZE_SPACE() {
+    public static _Or_Manipulation_ withNormalizeSpace() {
         XPathy xPathy = new XPathy();
         xPathy.is_normalize_space = true;
         return new _Or_Manipulation_(new Or(xPathy));
     }
 
-    public static _Or_Manipulation_ CASE(Case thisCase) {
+    public static _Or_Manipulation_ withCase(Case thisCase) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setCase(thisCase);
         return new _Or_Manipulation_(new Or(xPathy));
     }
 
-    public static _Or_Manipulation_ REMOVE(Only... onlyItems) {
+    public static _Or_Manipulation_ withRemoveOnly(Only... onlyItems) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setRemoveChars(onlyItems);
         return new _Or_Manipulation_(new Or(xPathy));
     }
 
-    public static  _Or_Manipulation_ KEEP(Only... onlyItems) {
+    public static  _Or_Manipulation_ withKeepOnly(Only... onlyItems) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setKeepOnlyChars(onlyItems);
         return new _Or_Manipulation_(new Or(xPathy));
     }
 
-    public static _Or_Manipulation_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public static _Or_Manipulation_ withTranslate(String charactersToReplace, String replacementCharacters) {
         XPathy xPathy = new _TranslateBuilder_(new XPathy()).setTranslate(charactersToReplace, replacementCharacters);
         return new _Or_Manipulation_(new Or(xPathy));
     }

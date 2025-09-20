@@ -20,38 +20,38 @@ public class _Attribute_Length_ {
     }
 
 
-    public _Attribute_Length_ TRIM() {
+    public _Attribute_Length_ withTrim() {
         _Attribute_Length_ copy = this.copy();
         copy.xPathy.is_trim = true;
         return copy;
     }
 
 
-    public _Attribute_Length_ NORMALIZE_SPACE() {
+    public _Attribute_Length_ withNormalizeSpace() {
         _Attribute_Length_ copy = this.copy();
         copy.xPathy.is_normalize_space = true;
         return copy;
     }
 
-    public _Attribute_Length_ CASE(Case thisCase) {
+    public _Attribute_Length_ withCase(Case thisCase) {
         _Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setCase(thisCase);
         return copy;
     }
 
-    public _Attribute_Length_ REMOVE(Only... onlyItems) {
+    public _Attribute_Length_ withRemoveOnly(Only... onlyItems) {
         _Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setRemoveChars(onlyItems);
         return copy;
     }
 
-    public _Attribute_Length_ KEEP(Only... onlyItems) {
+    public _Attribute_Length_ withKeepOnly(Only... onlyItems) {
         _Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setKeepOnlyChars(onlyItems);
         return copy;
     }
 
-    public _Attribute_Length_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public _Attribute_Length_ withTranslate(String charactersToReplace, String replacementCharacters) {
         _Attribute_Length_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setTranslate(charactersToReplace, replacementCharacters);
         return copy;
@@ -59,7 +59,7 @@ public class _Attribute_Length_ {
 
     //-----------------------------
 
-    public _Attribute_Length_Not_ NOT(){
+    public _Attribute_Length_Not_ not(){
         return new _Attribute_Length_Not_(this.xPathy, this.attribute);
     }
 

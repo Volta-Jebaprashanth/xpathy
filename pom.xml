@@ -15,11 +15,12 @@
 
   <dependencies>
     <!-- Selenium Dependency -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <version>4.18.1</version>
-    </dependency>
+      <dependency>
+          <groupId>org.seleniumhq.selenium</groupId>
+          <artifactId>selenium-api</artifactId>
+          <version>3.141.59</version>
+          <optional>true</optional>
+      </dependency>
 
   </dependencies>
 

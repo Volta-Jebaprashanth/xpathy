@@ -16,43 +16,43 @@ public class _Number_ {
         return new _Number_(this);
     }
 
-    public _Number_Not_ NOT() {
+    public _Number_Not_ not() {
         return new _Number_Not_(this.xPathy);
     }
 
 
-    public _Number_ TRIM() {
+    public _Number_ withTrim() {
         _Number_ copy = this.copy();
         copy.xPathy.is_trim = true;
         return copy;
     }
 
-    public _Number_ NORMALIZE_SPACE() {
+    public _Number_ withNormalizeSpace() {
         _Number_ copy = this.copy();
         copy.xPathy.is_normalize_space = true;
         return copy;
     }
 
 
-    public _Number_ CASE(Case thisCase) {
-        _Number_ copy = this.copy();
-        copy.xPathy = new _TranslateBuilder_(this.xPathy).setCase(thisCase);
-        return copy;
-    }
+//    public _Number_ CASE(Case thisCase) {
+//        _Number_ copy = this.copy();
+//        copy.xPathy = new _TranslateBuilder_(this.xPathy).setCase(thisCase);
+//        return copy;
+//    }
 
-    public _Number_ REMOVE(Only... onlyItems) {
+    public _Number_ withRemoveOnly(Only... onlyItems) {
         _Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setRemoveChars(onlyItems);
         return copy;
     }
 
-    public _Number_ KEEP(Only... onlyItems) {
+    public _Number_ withKeepOnly(Only... onlyItems) {
         _Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setKeepOnlyChars(onlyItems);
         return copy;
     }
 
-    public _Number_ TRANSLATE(String charactersToReplace, String replacementCharacters) {
+    public _Number_ withTranslate(String charactersToReplace, String replacementCharacters) {
         _Number_ copy = this.copy();
         copy.xPathy = new _TranslateBuilder_(this.xPathy).setTranslate(charactersToReplace, replacementCharacters);
         return copy;

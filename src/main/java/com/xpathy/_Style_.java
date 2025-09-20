@@ -15,7 +15,7 @@ public class _Style_ {
         this.style = style;
     }
 
-    public _Style_Not_ NOT(){
+    public _Style_Not_ not(){
         return new _Style_Not_(this.xPathy, this.style);
     }
 
