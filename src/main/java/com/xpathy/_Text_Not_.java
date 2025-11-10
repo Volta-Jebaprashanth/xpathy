@@ -432,7 +432,10 @@ public class _Text_Not_ {
         _XPathValueTransformer_ transformer = new _XPathValueTransformer_(copy);
         String function = transformer.buildFunctionExpression("text()");
 
-        copy.xpath = new _AppendAndOr_(copy).append("normalize-space(" + function + ") != ''"  + " and translate(" + function + ", '0123456789', '') != ''");
+        copy.xpath = new _AppendAndOr_(copy).append(
+                "not(" +
+                "not(number(" + function + ") != number("+ function +"))" +
+                ")");
 
         copy.is_and_or_condition_appendable = true;
         copy.reset_values();

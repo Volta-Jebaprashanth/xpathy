@@ -79,8 +79,10 @@ public class __Having_Text_Not_ {
         String function = transformer.buildFunctionExpression("text()");
 
         copy.xpath = new _AppendAndOr_(copy).append(
-                this.xPathy.having_condition_prefix + "["+
-                "normalize-space(" + function + ") != ''"  + " and translate(" + function + ", '0123456789', '') != '']");
+                this.xPathy.having_condition_prefix +
+                        "[not("+
+                        "not(number(" + function + ") != number("+ function +"))" +
+                        ")]");
 
         copy.is_and_or_condition_appendable = true;
         copy.reset_values();

@@ -148,8 +148,10 @@ public class __Having_Attribute_ {
         String function = transformer.buildFunctionExpression("@" + this.attribute);
 
         copy.xpath = new _AppendAndOr_(copy).append(
-                this.xPathy.having_condition_prefix + "["+
-                "string-length(" + function + ") > 0 and not(translate(" + function + ", '0123456789', '') != '')]");
+                this.xPathy.having_condition_prefix +
+                        "["+
+                        "not(number(" + function + ") != number("+ function +"))" +
+                        "]");
 
         copy.is_and_or_condition_appendable = true;
         copy.reset_values();
