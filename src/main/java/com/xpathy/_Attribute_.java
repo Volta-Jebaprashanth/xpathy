@@ -547,7 +547,7 @@ public class _Attribute_ {
         _XPathValueTransformer_ transformer = new _XPathValueTransformer_(copy);
         String function = transformer.buildFunctionExpression("@" + this.attribute);
 
-        copy.xpath = new _AppendAndOr_(copy).append("string-length(" + function + ") > 0 and not(translate(" + function + ", '0123456789', '') != '')");
+        copy.xpath = new _AppendAndOr_(copy).append("not(number(" + function + ") != number("+ function +"))");
 
         copy.is_and_or_condition_appendable = true;
         copy.reset_values();
