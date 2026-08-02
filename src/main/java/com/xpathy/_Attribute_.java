@@ -68,67 +68,73 @@ public class _Attribute_ {
     //=============================================================================
 
     public XPathy union(Or... orConditions) {
-        if (orConditions == null) {
+        if (orConditions == null || orConditions.length == 0) {
             return this.xPathy;
         }
 
         XPathy origin = this.xPathy.copy();
-        XPathy output = this.xPathy.copy();
+
+        XPathy template = origin.copy();
+        template.xpath = new XPathy().getXpath();
+        template.condition = XPathy.Condition.NONE;
+        template.is_and_or_condition_appendable = false;
+
+        XPathy group = template.copy();
 
         for (int i = 0; i < orConditions.length; i++) {
             Or orCondition = orConditions[i];
-            XPathy temp = _Multiple_And_Or_Merger_.merge(origin, orCondition.xPathy);
-            temp = _Multiple_And_Or_Merger_.merge(output, temp).copy();
+            XPathy temp = _Multiple_And_Or_Merger_.merge(template, orCondition.xPathy);
+            temp = _Multiple_And_Or_Merger_.merge(group, temp).copy();
 
             if (i == 0) {
                 if (!orCondition.isNot) {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).equals(orCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).equals(orCondition.number);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).contains(orCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).startsWith(orCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).isEmpty();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).isEmpty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).isNumeric();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).isNumeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).greaterThan(orCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(orCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).lessThan(orCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(orCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(orCondition.max);
                             break;
 
                         case HAVE_IT:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).haveIt();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).haveIt();
                             break;
 
                         case BETWEEN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).between(orCondition.min, orCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).between(orCondition.min, orCondition.max);
                             break;
                     }
 
@@ -136,51 +142,51 @@ public class _Attribute_ {
                 } else {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.number);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().contains(orCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().startsWith(orCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().empty();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().empty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().numeric();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().numeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThan(orCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(orCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThan(orCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(orCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(orCondition.max);
                             break;
 
                         case HAVE_IT:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().haveIt();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().haveIt();
                             break;
 
                         case BETWEEN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().between(orCondition.min, orCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().between(orCondition.min, orCondition.max);
                             break;
                     }
 
@@ -190,51 +196,51 @@ public class _Attribute_ {
                 if (!orCondition.isNot) {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).equals(orCondition.value);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).equals(orCondition.number);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).contains(orCondition.value);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).startsWith(orCondition.value);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).isEmpty();
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).isEmpty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).isNumeric();
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).isNumeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).greaterThan(orCondition.min);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(orCondition.min);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).lessThan(orCondition.max);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(orCondition.max);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(orCondition.max);
                             break;
 
                         case HAVE_IT:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).haveIt();
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).haveIt();
                             break;
 
                         case BETWEEN:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).between(orCondition.min, orCondition.max);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).between(orCondition.min, orCondition.max);
                             break;
                     }
 
@@ -242,51 +248,51 @@ public class _Attribute_ {
                 } else {
                     switch (orCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.value);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.value);
                             break;
 
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.number);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().equals(orCondition.number);
                             break;
 
                         case CONTAINS:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().contains(orCondition.value);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().contains(orCondition.value);
                             break;
 
                         case STARTS_WITH:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().startsWith(orCondition.value);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().startsWith(orCondition.value);
                             break;
 
                         case IS_EMPTY:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().empty();
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().empty();
                             break;
 
                         case IS_NUMERIC:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().numeric();
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().numeric();
                             break;
 
                         case GREATER_THAN:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().greaterThan(orCondition.min);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().greaterThan(orCondition.min);
                             break;
 
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(orCondition.min);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(orCondition.min);
                             break;
 
                         case LESS_THAN:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().lessThan(orCondition.max);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().lessThan(orCondition.max);
                             break;
 
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(orCondition.max);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(orCondition.max);
                             break;
 
                         case HAVE_IT:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().haveIt();
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().haveIt();
                             break;
 
                         case BETWEEN:
-                            output = temp.or().byAttribute(Attribute.custom(this.attribute)).not().between(orCondition.min, orCondition.max);
+                            group = temp.or().byAttribute(Attribute.custom(this.attribute)).not().between(orCondition.min, orCondition.max);
                             break;
                     }
 
@@ -294,100 +300,115 @@ public class _Attribute_ {
             }
         }
 
-        return output.copy();
+        String groupXpath = group.getXpath();
+        String innerCondition = groupXpath.substring(groupXpath.indexOf('[') + 1, groupXpath.length() - 1);
+        String combinedCondition = orConditions.length > 1 ? "(" + innerCondition + ")" : innerCondition;
+
+        XPathy result = origin.copy();
+        result.xpath = new _AppendAndOr_(result).append(combinedCondition);
+        result.is_and_or_condition_appendable = true;
+        result.reset_values();
+
+        return result.copy();
     }
 
 
     public XPathy intersect(And... andConditions) {
-        if (andConditions == null) {
+        if (andConditions == null || andConditions.length == 0) {
             return this.xPathy;
         }
 
         XPathy origin = this.xPathy.copy();
-        XPathy output = this.xPathy.copy();
+
+        XPathy template = origin.copy();
+        template.xpath = new XPathy().getXpath();
+        template.condition = XPathy.Condition.NONE;
+        template.is_and_or_condition_appendable = false;
+
+        XPathy group = template.copy();
 
         for (int i = 0; i < andConditions.length; i++) {
             And andCondition = andConditions[i];
-            XPathy temp = _Multiple_And_Or_Merger_.merge(origin, andCondition.xPathy);
-            temp = _Multiple_And_Or_Merger_.merge(output, temp).copy();
+            XPathy temp = _Multiple_And_Or_Merger_.merge(template, andCondition.xPathy);
+            temp = _Multiple_And_Or_Merger_.merge(group, temp).copy();
 
             if (i == 0) {
                 if (!andCondition.isNot) {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).equals(andCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).equals(andCondition.number);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).contains(andCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).startsWith(andCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).isEmpty();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).isEmpty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).isNumeric();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).isNumeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).greaterThan(andCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(andCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).lessThan(andCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(andCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(andCondition.max);
                             break;
                         case HAVE_IT:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).haveIt();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).haveIt();
                             break;
                         case BETWEEN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).between(andCondition.min, andCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).between(andCondition.min, andCondition.max);
                             break;
                     }
                 } else {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.number);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().contains(andCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().startsWith(andCondition.value);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().empty();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().empty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().numeric();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().numeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThan(andCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(andCondition.min);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThan(andCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(andCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(andCondition.max);
                             break;
                         case HAVE_IT:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().haveIt();
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().haveIt();
                             break;
                         case BETWEEN:
-                            output = temp.byAttribute(Attribute.custom(this.attribute)).not().between(andCondition.min, andCondition.max);
+                            group = temp.byAttribute(Attribute.custom(this.attribute)).not().between(andCondition.min, andCondition.max);
                             break;
                     }
                 }
@@ -395,86 +416,95 @@ public class _Attribute_ {
                 if (!andCondition.isNot) {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).equals(andCondition.value);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).equals(andCondition.number);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).contains(andCondition.value);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).startsWith(andCondition.value);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).isEmpty();
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).isEmpty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).isNumeric();
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).isNumeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).greaterThan(andCondition.min);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(andCondition.min);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).lessThan(andCondition.max);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(andCondition.max);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).lessThanOrEquals(andCondition.max);
                             break;
                         case HAVE_IT:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).haveIt();
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).haveIt();
                             break;
                         case BETWEEN:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).between(andCondition.min, andCondition.max);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).between(andCondition.min, andCondition.max);
                             break;
                     }
                 } else {
                     switch (andCondition.expressions) {
                         case EQUALS_TEXT_VALUE:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.value);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.value);
                             break;
                         case EQUALS_NUMBER_VALUE:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.number);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().equals(andCondition.number);
                             break;
                         case CONTAINS:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().contains(andCondition.value);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().contains(andCondition.value);
                             break;
                         case STARTS_WITH:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().startsWith(andCondition.value);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().startsWith(andCondition.value);
                             break;
                         case IS_EMPTY:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().empty();
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().empty();
                             break;
                         case IS_NUMERIC:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().numeric();
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().numeric();
                             break;
                         case GREATER_THAN:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().greaterThan(andCondition.min);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().greaterThan(andCondition.min);
                             break;
                         case GREATER_THAN_OR_EQUALS:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(andCondition.min);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().greaterThanOrEquals(andCondition.min);
                             break;
                         case LESS_THAN:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().lessThan(andCondition.max);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().lessThan(andCondition.max);
                             break;
                         case LESS_THAN_OR_EQUALS:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(andCondition.max);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().lessThanOrEquals(andCondition.max);
                             break;
                         case HAVE_IT:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().haveIt();
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().haveIt();
                             break;
                         case BETWEEN:
-                            output = temp.and().byAttribute(Attribute.custom(this.attribute)).not().between(andCondition.min, andCondition.max);
+                            group = temp.and().byAttribute(Attribute.custom(this.attribute)).not().between(andCondition.min, andCondition.max);
                             break;
                     }
                 }
             }
         }
 
-        return output.copy();
+        String groupXpath = group.getXpath();
+        String innerCondition = groupXpath.substring(groupXpath.indexOf('[') + 1, groupXpath.length() - 1);
+        String combinedCondition = andConditions.length > 1 ? "(" + innerCondition + ")" : innerCondition;
+
+        XPathy result = origin.copy();
+        result.xpath = new _AppendAndOr_(result).append(combinedCondition);
+        result.is_and_or_condition_appendable = true;
+        result.reset_values();
+
+        return result.copy();
     }
 
     //============================================================

@@ -1,11 +1,14 @@
-package com.xpathy;
+package com.xpathy.userTest;
+import com.xpathy.XPathy;
+import com.xpathy.Attribute;
+import com.xpathy.Or;
 
 public class Test {
 
     static XPathy xpathy = Attribute.id.contains("a")
             .byText().not()
             .union(Or.equals("1"), Or.contains("2"));
-
+    
     public static void main(String[] args) {
         System.out.println(xpathy.getXpath());
     }
