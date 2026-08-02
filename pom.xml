@@ -13,6 +13,11 @@
   <description>A Java XPath expression builder for UI automation</description>
   <url>https://github.com/Volta-Jebaprashanth/xpathy</url>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
   <dependencies>
     <!-- Selenium Dependency -->
       <dependency>

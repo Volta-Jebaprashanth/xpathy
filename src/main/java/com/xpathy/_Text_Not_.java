@@ -73,6 +73,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.byText().not().lessThanOrEquals(orCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + orCondition.expressions);
                     }
 
 
@@ -117,6 +121,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.byText().lessThanOrEquals(orCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + orCondition.expressions);
                     }
 
                 }
@@ -163,6 +171,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.or().byText().not().lessThanOrEquals(orCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + orCondition.expressions);
                     }
 
 
@@ -207,6 +219,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.or().byText().lessThanOrEquals(orCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + orCondition.expressions);
                     }
 
                 }
@@ -264,6 +280,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.byText().not().lessThanOrEquals(andCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + andCondition.expressions);
                     }
                 } else {
                     switch (andCondition.expressions) {
@@ -297,6 +317,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.byText().lessThanOrEquals(andCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + andCondition.expressions);
                     }
                 }
             } else {
@@ -332,6 +356,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.and().byText().not().lessThanOrEquals(andCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + andCondition.expressions);
                     }
                 } else {
                     switch (andCondition.expressions) {
@@ -365,6 +393,10 @@ public class _Text_Not_ {
                         case LESS_THAN_OR_EQUALS:
                             output = temp.and().byText().lessThanOrEquals(andCondition.max);
                             break;
+
+                        case HAVE_IT:
+                        case BETWEEN:
+                            throw new IllegalArgumentException("Unsupported expression for text condition: " + andCondition.expressions);
                     }
                 }
             }

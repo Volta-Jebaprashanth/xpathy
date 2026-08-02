@@ -196,10 +196,6 @@ public class XPathy {
 
 
     // ======================================== PRIVATE METHODS ========================================
-    private boolean checkXpathFormatToAppendAndOr() {
-        String trimmedXpath = this.xpath.trim();
-        return !trimmedXpath.matches(".*\\[\\d+\\]$") && !trimmedXpath.endsWith("[last()]");
-    }
 
     protected XPathy copy() {
         return new XPathy(this);
