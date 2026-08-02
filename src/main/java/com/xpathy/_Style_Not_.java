@@ -11,7 +11,8 @@ public class _Style_Not_ {
     }
 
     protected _Style_Not_(XPathy xPathy, String style){
-        this.xPathy = new _TranslateBuilder_(xPathy).setRemoveChars(Only.SPACES);
+        // xPathy already has space-removal applied by _Style_'s constructor (its only caller); don't reapply.
+        this.xPathy = xPathy;
         this.style = style;
     }
 

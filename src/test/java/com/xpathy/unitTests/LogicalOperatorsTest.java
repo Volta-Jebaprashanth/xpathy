@@ -122,7 +122,7 @@ class LogicalOperatorsTest {
 
     @Test
     void fourWayMixedWithNot() {
-        assertEquals("//div[not(@id='a') and contains(text(), 'b') or number(text()) <= 5 and contains(translate(@style, '  ', ''), 'background-color:') and not(contains(translate(@style, '  ', ''), 'background-color:red;'))]",
+        assertEquals("//div[not(@id='a') and contains(text(), 'b') or number(text()) <= 5 and contains(translate(@style, ' ', ''), 'background-color:') and not(contains(translate(@style, ' ', ''), 'background-color:red;'))]",
                 div.byAttribute(id).not().equals("a")
                         .and().byText().contains("b")
                         .or().byNumber().not().greaterThan(5)

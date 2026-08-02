@@ -33,10 +33,9 @@ class TextNotTest {
         assertEquals("//div[not(not(number(text()) != number(text())))]", div.byText().not().numeric().getXpath());
     }
 
-    // Pins current (likely buggy) output of _Text_Not_.equals(Number): no closing quote, no not() wrapper.
     @Test
-    void notEqualsNumberCurrentlyProducesMalformedXpath() {
-        assertEquals("//span[text()='5]", span.byText().not().equals(5).getXpath());
+    void notEqualsNumber() {
+        assertEquals("//span[not(text() = 5)]", span.byText().not().equals(5).getXpath());
     }
 
     @Test
