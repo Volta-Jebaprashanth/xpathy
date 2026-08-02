@@ -1,13 +1,4 @@
 package com.xpathy;
-
 public class Test {
-
-    static XPathy xpathy = Attribute.id.contains("a")
-            .byText().not()
-            .union(Or.equals("1"), Or.contains("2"));
-
-    public static void main(String[] args) {
-        System.out.println(xpathy.getXpath());
-    }
 
 }
