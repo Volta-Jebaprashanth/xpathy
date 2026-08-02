@@ -6,6 +6,7 @@ import com.xpathy.Or;
 public class Test {
 
     static XPathy xpathy = Attribute.id.contains("a")
+            .and()
             .byText().not()
             .union(Or.equals("1"), Or.contains("2"));
     
