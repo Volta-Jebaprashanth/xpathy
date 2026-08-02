@@ -1,4 +1,4 @@
-package com.xpathy.userTest;
+package com.xpathy.unitTests;
 import com.xpathy.XPathy;
 import com.xpathy.Attribute;
 import com.xpathy.Tag;
