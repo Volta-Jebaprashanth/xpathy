@@ -205,6 +205,68 @@ public class Tag {
         return new XPathy(this).byCondition(condition);
     }
 
+    //======================================== DOM NAVIGATION ========================================
+
+    public XPathy $tag(Tag tag) {
+        return new XPathy(this).$tag(tag);
+    }
+
+    public XPathy $parent(Tag tag) {
+        return new XPathy(this).$parent(tag);
+    }
+
+    public XPathy $parent() {
+        return new XPathy(this).$parent();
+    }
+
+    public XPathy $up() {
+        return new XPathy(this).$up();
+    }
+
+    public XPathy $up(int count) {
+        return new XPathy(this).$up(count);
+    }
+
+    public XPathy $ancestor(Tag tag) {
+        return new XPathy(this).$ancestor(tag);
+    }
+
+    public XPathy $ancestor() {
+        return new XPathy(this).$ancestor();
+    }
+
+    public XPathy $child(Tag tag) {
+        return new XPathy(this).$child(tag);
+    }
+
+    public XPathy $child() {
+        return new XPathy(this).$child();
+    }
+
+    public XPathy $descendant(Tag tag) {
+        return new XPathy(this).$descendant(tag);
+    }
+
+    public XPathy $descendant() {
+        return new XPathy(this).$descendant();
+    }
+
+    public XPathy $followingSibling(Tag tag) {
+        return new XPathy(this).$followingSibling(tag);
+    }
+
+    public XPathy $followingSibling() {
+        return new XPathy(this).$followingSibling();
+    }
+
+    public XPathy $precedingSibling(Tag tag) {
+        return new XPathy(this).$precedingSibling(tag);
+    }
+
+    public XPathy $precedingSibling() {
+        return new XPathy(this).$precedingSibling();
+    }
+
     //================================================================================================================
 
 
