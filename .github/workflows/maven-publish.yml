@@ -25,9 +25,26 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn package
+        run: mvn -B package
+
+      - name: Check if this version is already published
+        id: check_version
+        run: |
+          VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version)
+          GROUP_PATH=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.groupId | tr '.' '/')
+          ARTIFACT_ID=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.artifactId)
+          URL="https://maven.pkg.github.com/${{ github.repository }}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.jar"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "$URL")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if [ "$STATUS" = "200" ]; then
+            echo "Version $VERSION is already published, skipping deploy."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Deploy to GitHub Packages
-        run: mvn deploy
+        if: steps.check_version.outputs.skip == 'false'
+        run: mvn -B deploy -DskipTests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
