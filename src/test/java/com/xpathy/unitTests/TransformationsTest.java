@@ -79,4 +79,34 @@ class TransformationsTest {
                         .contains("premium cafe")
                         .getXpath());
     }
+
+    @Test
+    void withTrimOnAttribute() {
+        assertEquals("//*[normalize-space(translate(@id, '\u00A0', ' '))='x']",
+                id.withTrim().equals("x").getXpath());
+    }
+
+    @Test
+    void withTrimOnText() {
+        assertEquals("//div[normalize-space(translate(text(), '\u00A0', ' ')) = 'x']",
+                div.byText().withTrim().equals("x").getXpath());
+    }
+
+    @Test
+    void withTrimOnNumber() {
+        assertEquals("//span[number(normalize-space(translate(text(), '\u00A0', ' '))) > 5]",
+                span.byNumber().withTrim().greaterThan(5).getXpath());
+    }
+
+    @Test
+    void repeatedWithRemoveOnlyAccumulatesCharacterSet() {
+        assertEquals("//div[contains(translate(text(), concat('0123456789!@#$%^&*()_+-=[]{}|;:,./<>?`~\\' , '\"',\"'\"), ''), 'x')]",
+                div.byText().withRemoveOnly(NUMBERS).withRemoveOnly(SPECIAL_CHARACTERS).contains("x").getXpath());
+    }
+
+    @Test
+    void repeatedWithKeepOnlyAccumulatesCharacterSet() {
+        assertEquals("//div[contains(translate(text(), translate(text(), '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ''), ''), 'x')]",
+                div.byText().withKeepOnly(NUMBERS).withKeepOnly(ENGLISH_ALPHABETS).contains("x").getXpath());
+    }
 }

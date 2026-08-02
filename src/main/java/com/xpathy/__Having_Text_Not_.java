@@ -96,7 +96,7 @@ public class __Having_Text_Not_ {
 
         copy.xpath = new _AppendAndOr_(copy).append(
                 this.xPathy.having_condition_prefix + "["+
-                function + "='" + number + "]");
+                "not(" + function + " = " + number + ")]");
 
         copy.is_and_or_condition_appendable = true;
         copy.reset_values();

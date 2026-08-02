@@ -88,4 +88,52 @@ class HavingTest {
                         .byHaving().child(td).byText().contains("Subtotal")
                         .getXpath());
     }
+
+    @Test
+    void havingParentWithTagPrefixThenByAttribute() {
+        assertEquals("//div[parent::section[@id='x']]",
+                div.byHaving().parent(section).byAttribute(id).equals("x").getXpath());
+    }
+
+    @Test
+    void havingFollowingSiblingWithTagPrefixThenByText() {
+        assertEquals("//div[following-sibling::span[contains(text(), 'x')]]",
+                div.byHaving().followingSibling(span).byText().contains("x").getXpath());
+    }
+
+    @Test
+    void havingPrecedingSiblingWithTagPrefixThenByNumber() {
+        assertEquals("//div[preceding-sibling::li[number(text()) > 5]]",
+                div.byHaving().precedingSibling(li).byNumber().greaterThan(5).getXpath());
+    }
+
+    @Test
+    void havingAncestorWithTagPrefixThenByAttribute() {
+        assertEquals("//div[ancestor::section[@id='x']]",
+                div.byHaving().ancestor(section).byAttribute(id).equals("x").getXpath());
+    }
+
+    @Test
+    void havingParentNoTagThenByAttribute() {
+        assertEquals("//div[parent::*[@id='x']]",
+                div.byHaving().parent().byAttribute(id).equals("x").getXpath());
+    }
+
+    @Test
+    void havingDescendantWithTagPrefixThenByAttribute() {
+        assertEquals("//div[.//span[@id='x']]",
+                div.byHaving().descendant(span).byAttribute(id).equals("x").getXpath());
+    }
+
+    @Test
+    void havingFollowingSiblingNoTagThenByText() {
+        assertEquals("//div[following-sibling::*[contains(text(), 'x')]]",
+                div.byHaving().followingSibling().byText().contains("x").getXpath());
+    }
+
+    @Test
+    void havingPrecedingSiblingNoTagThenByNumber() {
+        assertEquals("//div[preceding-sibling::*[number(text()) > 5]]",
+                div.byHaving().precedingSibling().byNumber().greaterThan(5).getXpath());
+    }
 }

@@ -129,4 +129,37 @@ class NestedConditionTest {
                         not(style(backgroundColor).equals("red"))
                 ).getXpath());
     }
+
+    @Test
+    void andSkipSlotLastIsOmittedEntirely() {
+        assertEquals("//div[( @id='a' )]",
+                div.byCondition(
+                        and(
+                                attribute(id).equals("a"),
+                                and()
+                        )
+                ).getXpath());
+    }
+
+    @Test
+    void orSkipSlotLastIsOmittedEntirely() {
+        assertEquals("//div[( @id='a' )]",
+                div.byCondition(
+                        or(
+                                attribute(id).equals("a"),
+                                or()
+                        )
+                ).getXpath());
+    }
+
+    @Test
+    void andSkipSlotFirstIsOmittedEntirely() {
+        assertEquals("//div[( @id='a' )]",
+                div.byCondition(
+                        and(
+                                and(),
+                                attribute(id).equals("a")
+                        )
+                ).getXpath());
+    }
 }
