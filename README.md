@@ -3,6 +3,7 @@
 [![Website](https://img.shields.io/badge/website-xpathy.uk-blue)](https://xpathy.uk/)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-brightgreen)](https://chromewebstore.google.com/detail/xpathy/hpnlokibgcnfjpalnojoahngkjdokmom)
 [![XPathy Server](https://img.shields.io/badge/XPathy-Server-orange)](https://github.com/Volta-Jebaprashanth/xpathy-server)
+[![XPathy MCP](https://img.shields.io/badge/XPathy-MCP-purple)](https://github.com/Volta-Jebaprashanth/xpathy-mcp)
 
 XPathy is a lightweight Java library that simplifies the creation of **XPath expressions** to be used in Selenium. Instead of manually writing long, error‑prone strings, XPathy allows you to build expressions using a **fluent API**. This makes your locators more **readable**, **maintainable**, and **scalable**. XPathy takes away the frustration of balancing brackets, quotes, and functions, letting developers focus on expressing intent clearly.
 
@@ -19,8 +20,9 @@ What started as a single Java library has grown into a full ecosystem for writin
 | 🌍 **[Official Website](https://xpathy.uk/)** | Landing page for the project — documentation, examples, and the latest updates on XPathy. |
 | 🧩 **[Chrome Extension](https://chromewebstore.google.com/detail/xpathy/hpnlokibgcnfjpalnojoahngkjdokmom)** | Write XPathy Java snippets right in your browser and instantly see them converted to XPath, with matching elements highlighted live on the page. Available from the toolbar and DevTools. |
 | 🖥️ **[XPathy Server](https://github.com/Volta-Jebaprashanth/xpathy-server)** | The local Spring Boot service (with a Swing GUI launcher) that powers the Chrome Extension — it interprets XPathy snippets and returns valid XPath, entirely offline on your machine. |
+| 🤖 **[XPathy MCP](https://github.com/Volta-Jebaprashanth/xpathy-mcp)** | A Model Context Protocol (MCP) server that exposes XPathy's locator-building capabilities to AI assistants and agentic coding tools, letting them generate and validate XPath expressions directly. |
 
-Together, the library, the extension, and the server let you **write locators in Java, preview them visually in the browser, and ship them straight into your Selenium tests** — all without leaving your workflow.
+Together, the library, the extension, the server, and the MCP integration let you **write locators in Java, preview them visually in the browser, and ship them straight into your Selenium tests** — all without leaving your workflow.
 
 ----------
 ## 👨‍💻 Author
