@@ -9,6 +9,8 @@ XPathy is a Java library built with Maven. You'll need:
 - JDK 11 or higher (CI builds against Java 17; JitPack builds against OpenJDK 11)
 - Maven 3.6+
 
+> Note: an IDE such as IntelliJ IDEA or Eclipse is recommended but not required.
+
 Clone the repo and build:
 
 ```bash
