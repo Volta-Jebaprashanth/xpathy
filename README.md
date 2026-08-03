@@ -39,7 +39,7 @@ package com.xpathy;
 ---
 
 ## 📦 Installation (via JitPack)
-📎 [View on JitPack](https://jitpack.io/#Volta-Jebaprashanth/xpathy/3.0.2)
+📎 [View on JitPack](https://jitpack.io/#Volta-Jebaprashanth/xpathy/v3.0.2)
 for other installation modules.
 
 To use this library in your **Maven** project (pom.xml):
@@ -62,7 +62,7 @@ To use this library in your **Maven** project (pom.xml):
   <dependency>
     <groupId>com.github.Volta-Jebaprashanth</groupId>
     <artifactId>xpathy</artifactId>
-    <version>3.0.2</version>
+    <version>v3.0.2</version>
   </dependency>
 </dependencies>
 ```
