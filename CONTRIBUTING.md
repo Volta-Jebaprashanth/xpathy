@@ -30,8 +30,8 @@ The project has no runtime dependencies beyond an *optional* Selenium API depend
 ## Project Structure
 
 ```
-src/main/java/com/xpathy/   Public API and internal implementation
-src/test/java/com/xpathy/unitTests/   JUnit 5 tests
+src/main/java/uk/xpathy/   Public API and internal implementation
+src/test/java/uk/xpathy/unitTests/   JUnit 5 tests
 ```
 
 XPathy is a fluent-API XPath builder. The public entry points are classes like `Attribute`, `Tag`, `Text`, `Style`, `And`, `Or`, and `XPathy` itself. Most classes prefixed with an underscore (e.g. `_Attribute_`, `_Condition_Text_`, `__Having_`) are internal builder-state classes that back the fluent chains — they are not meant to be used directly by consumers of the library and should stay package-private where possible.
@@ -41,7 +41,7 @@ When adding a new attribute or tag constant, follow the existing pattern in `Att
 ## Making Changes
 
 1. Fork the repo and create a branch off `main` (e.g. `feature/xyz`, `bugfix/xyz`).
-2. Write or update unit tests under `src/test/java/com/xpathy/unitTests/` for any behavior change. XPathy is a pure string-building library, so nearly every feature is testable by asserting the generated XPath string.
+2. Write or update unit tests under `src/test/java/uk/xpathy/unitTests/` for any behavior change. XPathy is a pure string-building library, so nearly every feature is testable by asserting the generated XPath string.
 3. Keep the fluent API's generated XPath output stable unless you're intentionally fixing a bug — downstream users depend on exact string output.
 4. Run `mvn test` and make sure everything passes before opening a PR.
 5. Follow the existing commit message style used in this repo's history: `feat: ...`, `fix: ...`, `docs: ...`, `refactor: ...`, `test: ...`, `chore: ...`, `ci: ...`.

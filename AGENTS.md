@@ -18,8 +18,8 @@ There is no linter or formatter config in this repo — match the existing style
 
 ## Architecture
 
-- `src/main/java/com/xpathy/` — all production code, single package.
-- `src/test/java/com/xpathy/unitTests/` — JUnit 5 tests, one class per feature area (e.g. `AttributeTest`, `OrTest`, `HavingTextTest`).
+- `src/main/java/uk/xpathy/` — all production code, single package.
+- `src/test/java/uk/xpathy/unitTests/` — JUnit 5 tests, one class per feature area (e.g. `AttributeTest`, `OrTest`, `HavingTextTest`).
 - Public entry points: `Attribute`, `Tag`, `Text`, `Style`, `And`, `Or`, `Expressions`, `XPathy`.
 - Classes prefixed with `_` or `__` (e.g. `_Attribute_`, `_Condition_Text_`, `__Having_Number_`) are **internal builder-state implementation classes** backing the fluent chains. They are not part of the public API — do not add new public methods there without checking whether the change belongs on a public-facing class instead.
 - The fluent chains work by each step returning a new builder type that narrows what can be called next (e.g. `Attribute.id` → `.contains(...)` → an `_Attribute_` instance → `.and()`/`.or()` → next condition). When adding a new operation, follow the existing narrowing pattern rather than adding a catch-all method to a broad type.
