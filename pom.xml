@@ -4,9 +4,9 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.xpathy</groupId>
+  <groupId>uk.xpathy</groupId>
   <artifactId>xpathy</artifactId>
-  <version>3.0.2</version>
+  <version>3.1.0</version>
   <packaging>jar</packaging>
 
   <name>XPathy</name>
@@ -117,8 +117,89 @@
           </execution>
         </executions>
       </plugin>
+
+      <!-- Maven Central requires a sources jar alongside the main artifact -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Maven Central requires a javadoc jar alongside the main artifact -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.6.3</version>
+        <configuration>
+          <source>11</source>
+          <doclint>none</doclint>
+          <failOnError>false</failOnError>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
+  <!--
+    Maven Central publishing (Central Portal) is wired behind the "release" profile
+    so day-to-day builds and the GitHub Packages deploy above don't need a GPG key.
+    Activate with: mvn -Prelease deploy
+    Requires (see CONTRIBUTING.md / release notes for setup):
+      - A Central Portal account (central.sonatype.com) with the "uk.xpathy" namespace
+        verified via a DNS TXT record on xpathy.uk
+      - A GPG key pair, with the public key uploaded to a keyserver
+      - A <server id="central"> entry in ~/.m2/settings.xml (or CI secrets) holding the
+        Central Portal user token as <username>/<password>, and GPG passphrase supplied
+        via GPG_TTY/gpg-agent or -Dgpg.passphrase
+  -->
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>3.2.4</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>0.7.0</version>
+            <extensions>true</extensions>
+            <configuration>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>false</autoPublish>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>

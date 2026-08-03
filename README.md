@@ -36,12 +36,12 @@ Created by **Volta Jebaprashanth**
 
 ## 📦 Package
 ```java
-package com.xpathy;
+package uk.xpathy;
 ```
 ---
 
 ## 📦 Installation (via JitPack)
-📎 [View on JitPack](https://jitpack.io/#Volta-Jebaprashanth/xpathy/v3.0.2)
+📎 [View on JitPack](https://jitpack.io/#Volta-Jebaprashanth/xpathy/v3.1.0)
 for other installation modules.
 
 To use this library in your **Maven** project (pom.xml):
@@ -64,7 +64,7 @@ To use this library in your **Maven** project (pom.xml):
   <dependency>
     <groupId>com.github.Volta-Jebaprashanth</groupId>
     <artifactId>xpathy</artifactId>
-    <version>v3.0.2</version>
+    <version>v3.1.0</version>
   </dependency>
 </dependencies>
 ```
@@ -95,7 +95,7 @@ Attributes are the most common entry point for XPath locators. XPathy exposes al
 **Import all attributes:**
 
 ```java
-import static com.xpathy.Attribute.*;
+import static uk.xpathy.Attribute.*;
 ```
 
 Examples:
@@ -153,7 +153,7 @@ XPathy allows scoping attributes inside specific HTML tags, making locators more
 **Import all tags:**
 
 ```java
-import static com.xpathy.Tag.*;
+import static uk.xpathy.Tag.*;
 ```
 
 Examples:
@@ -260,7 +260,7 @@ XPathy locator = div.byStyle(backgroundColor).equals("#000000");
 
 
 ```java
-import static com.xpathy.Style.*;
+import static uk.xpathy.Style.*;
 ```
 ```java
 XPathy locator = backgroundColor.equals("#000000");
@@ -618,7 +618,7 @@ Transformations are chainable and can be combined in sequence. They apply to the
 Import cases:
 
 ```java
-import static com.xpathy.Case.*;
+import static uk.xpathy.Case.*;
 
 ```
 
@@ -697,7 +697,7 @@ XPathy locator = div.byText()
 Import filters:
 
 ```java
-import static com.xpathy.Only.*;
+import static uk.xpathy.Only.*;
 ```
 
 ### Keep Only
@@ -897,7 +897,7 @@ Instead of chaining `and()`, `or()`, and `not()` inline, you can use the **`Cond
 **Import static methods:**
 
 ```java
-import static com.xpathy.Condition.*;
+import static uk.xpathy.Condition.*;
 ```
 
 ----------
@@ -941,7 +941,7 @@ XPathy locator = div.byCondition(
 
 ```java
 // Nested Logical Conditions
-import static com.xpathy.Condition.*;
+import static uk.xpathy.Condition.*;
 XPathy locator = span.byCondition(
                 or(
                         text().contains("Premium"),
