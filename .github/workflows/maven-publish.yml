@@ -30,25 +30,19 @@ jobs:
       - name: Build with Maven
         run: mvn -B package
 
-      - name: Check if this version is already published
-        id: check_version
-        run: |
-          VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version)
-          GROUP_PATH=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.groupId | tr '.' '/')
-          ARTIFACT_ID=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.artifactId)
-          URL="https://maven.pkg.github.com/${{ github.repository }}/${GROUP_PATH}/${ARTIFACT_ID}/${VERSION}/${ARTIFACT_ID}-${VERSION}.jar"
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -u "${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" "$URL")
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          if [ "$STATUS" = "200" ]; then
-            echo "Version $VERSION is already published, skipping deploy."
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Deploy to GitHub Packages
-        if: steps.check_version.outputs.skip == 'false'
-        run: mvn -B deploy -DskipTests
+        run: |
+          set +e
+          mvn -B deploy -DskipTests | tee deploy.log
+          STATUS=${PIPESTATUS[0]}
+          set -e
+          if [ "$STATUS" -ne 0 ]; then
+            if grep -q "status code: 409" deploy.log; then
+              echo "This version is already published to GitHub Packages; nothing to do."
+              exit 0
+            fi
+            exit "$STATUS"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_ACTOR: ${{ github.actor }}
